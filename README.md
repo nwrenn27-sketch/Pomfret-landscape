@@ -2,6 +2,10 @@
 
 A minimal, line-art visualization of Pomfret School's campus buildings, designed for plotting on a Makelangelo large-format plotter. Inspired by terrain rendering techniques adapted for architectural blueprint-style output.
 
+## Project Goal
+
+This project creates a bird's-eye view design of the Pomfret School campus inspired by the Grand Canyon terrain visualization. The goal is to render the campus buildings in a clean, vector graphic line-art style that can be plotted on a Makelangelo large-format plotter, with potential to expand the concept to any address in the world.
+
 ## Overview
 
 This project renders 486 building footprints from Pomfret School's campus in a clean, structural line-art style. The data is sourced from OpenStreetMap and processed into Turtletoy-compatible code that can be exported to SVG for plotting.
