@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Temporary files
+*.tmp
+temp_*
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Optional: Large data files (uncomment if you want to exclude)
+# osm_raw_data.json
