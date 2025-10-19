@@ -5,8 +5,8 @@ function walk(i){
 if(i>=D.length)return false;
 const p=D[i];
 if(!p||p.length<2)return true;
-turtle.jump([p[0][0]*8000,p[0][1]*8000]);
-for(let j=1;j<p.length;j++)turtle.goto([p[j][0]*8000,p[j][1]*8000]);
-turtle.goto([p[0][0]*8000,p[0][1]*8000]);
+jump([p[0][0]*8000,p[0][1]*8000]);
+for(let j=1;j<p.length;j++)goto([p[j][0]*8000,p[j][1]*8000]);
+goto([p[0][0]*8000,p[0][1]*8000]);
 return true;
 }
