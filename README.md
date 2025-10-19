@@ -26,7 +26,8 @@ This project renders 486 building footprints from Pomfret School's campus in a c
 
 ## Files
 
-- **pomfret_complete.js** - Ready-to-use Turtletoy code with embedded building data (MAIN FILE)
+- **pomfret_turtletoy_mini.js** - Optimized version: 79KB, 73% smaller (RECOMMENDED)
+- **pomfret_turtletoy_working.js** - Full version: 301KB with building names
 - **extract_osm_data.html** - Interactive tool to fetch fresh OpenStreetMap data
 - **process_osm_data.py** - Python script to process OSM JSON into building polygons
 - **building_data.js** - Extracted building coordinates (486 buildings)
@@ -38,7 +39,7 @@ This project renders 486 building footprints from Pomfret School's campus in a c
 
 1. Go to [Turtletoy.net](https://turtletoy.net)
 2. Click "New" to create a new turtle
-3. Copy the entire contents of `pomfret_complete.js`
+3. Copy the entire contents of **`pomfret_turtletoy_mini.js`** (recommended - faster loading)
 4. Paste it into the Turtletoy code editor
 5. Click "Play" to preview the rendering
 6. Click "Export to SVG" (use the menu: ... → Export to SVG)
