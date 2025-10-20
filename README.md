@@ -1,33 +1,33 @@
-# Pomfret School Campus - 3D Isometric Visualization
+# Pomfret School Campus - Architectural Line Drawing
 
-3D isometric visualization of Pomfret School's core campus buildings for Turtletoy/Makelangelo plotting.
+Architectural line-art visualization of Pomfret School's 5 key buildings for Turtletoy/Makelangelo plotting.
 
 ## Final Output
 
-**`pomfret_campus.js`** - Turtletoy code rendering 12 core campus buildings in 3D isometric perspective
+**`pomfret_campus.js`** - Turtletoy code rendering 5 key campus buildings with distinctive architectural features
 
 ### Features
-- 3D isometric projection (30° tilt, 45° rotation)
-- Varying building heights based on structure type
-- Architectural detail lines (floor markers on visible walls)
-- Optimized scale (80,000x) for canvas fill
-- Clean, blueprint-style aesthetic
+- View from southwest looking northeast (225° rotation, 25° tilt)
+- Architectural details based on actual building photographs
+- Distinctive features for each building style
+- Optimized scale (25,000x) for clear visibility
+- Clean line-art suitable for pen plotting
 
 ## Buildings Included
 
-### Named Buildings (7)
-- Pyne Dormitory
-- Corzine Athletic Center/Olmsted Student Union (OSU)
-- Clark Memorial Chapel
-- Pomfret Main House
-- Centennial Academics and Art Center
-- Plant/Bourne Dormitories
-- Dunworth/Pontefract Dormitories
+### 5 Key Buildings
+1. **VISTA** - Modern science building with vertical metal panel lines (3 stories, 9m)
+2. **Centennial** - Academic/arts building with peaked roofs and cupola (2 stories, 8m)
+3. **The Bricks (Dunworth/Pontefract)** - Georgian dormitories with dormers (3 stories, 11m)
+4. **School Building** - Collegiate Georgian with tall cupola tower (4 stories, 12m)
+5. **Clark Memorial Chapel** - Norman stone with simple peaked roof (1 story, 12m vaulted)
 
-### Additional Key Buildings (5)
-- Vista (Science Building)
-- DuPont Library
-- 3 other core academic/administrative buildings
+### Architectural Features Captured
+- **VISTA**: Vertical metal panel lines (8 panels per visible wall)
+- **Centennial & School Building**: Cupola/bell towers on rooftops
+- **Traditional buildings**: Multiple peaked roof sections
+- **The Bricks**: Georgian floor lines and dormers
+- **Chapel**: Simple peaked roof with ridge
 
 ## Quick Start
 
@@ -52,115 +52,57 @@
 ## Project Files
 
 ### Essential Files
-- **`pomfret_campus.js`** - Final 3D isometric Turtletoy code
-- **`final_campus_buildings.json`** - Selected 12 buildings dataset
-- **`building_data.js`** - Full OSM building data (486 buildings, for reference)
+- **`pomfret_campus.js`** - Final architectural line drawing (5 buildings)
+- **`building_heights_reference.json`** - Research-based building measurements
+- **`final_campus_buildings.json`** - Original 12 buildings dataset (for reference)
 
-### Data Pipeline Tools
+### Data Tools
 - **`extract_osm_data.html`** - Interactive OSM data extractor
+- **`extract_detailed_buildings.html`** - Enhanced shape extractor
+- **`extract_3d_buildings.html`** - Height data extractor
 - **`process_osm_data.py`** - Converts OSM JSON to JavaScript
-- **`generate_final_turtletoy.py`** - Generates Turtletoy code from selection
+- **`generate_final_turtletoy.py`** - Generates Turtletoy code
+
+### Reference Data
+- **`building_data.js`** - Full OSM data (486 buildings)
+- **`detailed_building_shapes.json`** - Complex footprints with all points
+- **`osm_detailed_buildings.json`** - Raw OSM data
 
 ## Technical Details
 
-### 3D Projection Algorithm
+### Viewing Angle
 ```javascript
-// Isometric angles
-angleX = 30° (tilt down)
-angleZ = 45° (rotate around vertical axis)
-
-// Coordinate transformation: geographic → 3D → 2D isometric
-project3D(x, y, z) {
-  // Rotate around Z axis (horizontal rotation)
-  x1 = x * cos(angleZ) - y * sin(angleZ)
-  y1 = x * sin(angleZ) + y * cos(angleZ)
-
-  // Tilt down (rotate around X axis)
-  y2 = y1 * cos(angleX) - z * sin(angleX)
-
-  return [x1, y2]
-}
+angleX = 25° (tilt down from horizontal)
+angleZ = 225° (view from southwest, looking northeast)
+scale = 25,000 (optimized for 5 buildings)
 ```
 
 ### Coordinate System
 - **Center**: 41.8862°N, 71.9640°W (Pomfret campus core)
-- **Scale**: 80,000x (optimized for full canvas usage)
-- **Offset**: (0, 200) for vertical centering
+- **Normalized center**: (0.0001641, -0.0009395)
+- **Buildings positioned relative to center**
 
-### Building Heights
-Heights assigned based on building type (in coordinate units):
-- **Tall buildings** (Chapel, Academic): 0.0011-0.0012
-- **Medium buildings** (Dorms): 0.0008-0.0009
-- **Short buildings** (Single-story): 0.0005-0.0006
+### Building Heights (coordinate units)
+- Chapel: 0.0012 (12m vaulted ceiling)
+- School Building: 0.0012 (4 stories)
+- The Bricks: 0.0011 (3 stories)
+- VISTA: 0.0009 (3 stories)
+- Centennial: 0.0008 (2 stories)
 
-### Architectural Details
-- Floor lines drawn at regular intervals (every 0.0002 units)
-- Visible face detection (only draws lines on viewer-facing walls)
-- Base, roof, and vertical edges all rendered
+## Architectural Research
 
-## Regenerating from Source
-
-If you need to modify building selection or update data:
-
-### 1. Extract Fresh OSM Data (if needed)
-```bash
-# Open in browser
-open extract_osm_data.html
-
-# Adjust bounding box on map
-# Click "Fetch Building Data"
-# Save results
-```
-
-### 2. Process OSM Data
-```bash
-python3 process_osm_data.py
-```
-
-### 3. Select Buildings
-Manually edit `final_campus_buildings.json` or create new filter script based on:
-- Building coordinates
-- Building names
-- Bounding box filters
-
-### 4. Generate Turtletoy Code
-```bash
-python3 generate_final_turtletoy.py
-```
-
-## Customization
-
-### Adjust Viewing Angle
-```javascript
-const angleX = 30 * Math.PI / 180;  // Change tilt (20-40° recommended)
-const angleZ = 45 * Math.PI / 180;  // Change rotation (any angle)
-```
-
-### Adjust Scale
-```javascript
-const scale = 80000;  // Increase for larger, decrease for smaller
-```
-
-### Modify Building Heights
-```javascript
-const heights = [0.0008, 0.0012, ...];  // One value per building
-```
-
-### Add More Detail Lines
-```javascript
-const numFloors = Math.floor(h / 0.0002);  // Decrease divisor for more floors
-```
+Building designs based on actual photographs and architectural documentation:
+- VISTA designed by Annum Architects (2024)
+- Historical buildings by Ernest Flagg (1905-1915)
+- Centennial Building by Centerbrook Architects
+- Research from pomfret.org and architectural firm websites
 
 ## Data Source
 
 Building footprints from OpenStreetMap via Overpass API:
 - **License**: ODbL (OpenStreetMap contributors)
 - **Coverage**: Pomfret School campus, northeastern Connecticut
-- **Buildings**: 486 total in dataset, 12 selected for visualization
-
-## Repository
-
-https://github.com/nwrenn27-sketch/Pomfret-landscape
+- **Buildings**: 486 total in dataset, 5 selected for final visualization
 
 ## Credits
 
@@ -168,4 +110,4 @@ https://github.com/nwrenn27-sketch/Pomfret-landscape
 **Data**: OpenStreetMap contributors
 **Platform**: Turtletoy.net
 **Plotter**: Makelangelo Huge model
-**Visualization**: 3D isometric building rendering
+**Visualization**: Architectural line drawing with photo-based details
