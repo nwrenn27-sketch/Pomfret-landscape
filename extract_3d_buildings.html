@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pomfret School - 3D Building Data Extractor</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+        #map { height: 70vh; width: 100%; }
+        #controls { padding: 20px; background: #f5f5f5; }
+        #output { margin-top: 20px; padding: 20px; background: white; border: 1px solid #ddd; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer;
+                 background: #2c5aa0; color: white; border: none; border-radius: 4px; }
+        button:hover { background: #1a3a6f; }
+        pre { background: #f8f8f8; padding: 15px; overflow-x: auto; max-height: 400px; }
+        .info { color: #666; margin-top: 10px; }
+        .success { color: #27ae60; font-weight: bold; }
+        .error { color: #e74c3c; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div id="controls">
+        <h2>Extract 3D Building Data - Pomfret School</h2>
+        <p>This tool extracts building footprints WITH height data (building:levels, height tags) from OpenStreetMap.</p>
+        <button onclick="fetchBuildingData()">Fetch 3D Building Data</button>
+        <div class="info">
+            <strong>Note:</strong> This extracts building heights, levels, and roof information for more realistic 3D rendering.
+        </div>
+    </div>
+
+    <div id="map"></div>
+
+    <div id="output"></div>
+
+    <script>
+        // Initialize map centered on Pomfret School
+        const map = L.map('map').setView([41.8862, -71.9640], 16);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        // Draw campus bounding box
+        const bounds = [
+            [41.8795, -71.9710],  // Southwest
+            [41.8930, -71.9570]   // Northeast
+        ];
+
+        L.rectangle(bounds, {
+            color: '#2c5aa0',
+            weight: 2,
+            fillOpacity: 0.1
+        }).addTo(map);
+
+        L.marker([41.8862, -71.9640]).addTo(map)
+            .bindPopup('Pomfret School Campus Center');
+
+        async function fetchBuildingData() {
+            const output = document.getElementById('output');
+            output.innerHTML = '<p>Fetching 3D building data from OpenStreetMap...</p>';
+
+            // Overpass API query - includes height and level data
+            const query = `
+                [out:json][timeout:25];
+                (
+                  way["building"](41.8795,-71.9710,41.8930,-71.9570);
+                  relation["building"](41.8795,-71.9710,41.8930,-71.9570);
+                );
+                out body;
+                >;
+                out skel qt;
+            `;
+
+            try {
+                const response = await fetch('https://overpass-api.de/api/interpreter', {
+                    method: 'POST',
+                    body: query
+                });
+
+                const data = await response.json();
+
+                // Process buildings with height data
+                const buildings = processBuildings(data);
+
+                displayResults(buildings);
+
+            } catch (error) {
+                output.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            }
+        }
+
+        function processBuildings(data) {
+            const nodes = {};
+            const buildings = [];
+
+            // First pass: store all nodes
+            data.elements.forEach(el => {
+                if (el.type === 'node') {
+                    nodes[el.id] = { lat: el.lat, lon: el.lon };
+                }
+            });
+
+            // Second pass: process buildings
+            data.elements.forEach(el => {
+                if (el.type === 'way' && el.tags && el.tags.building) {
+                    const coords = el.nodes
+                        .map(nodeId => nodes[nodeId])
+                        .filter(n => n);
+
+                    if (coords.length > 0) {
+                        const building = {
+                            id: el.id,
+                            name: el.tags.name || null,
+                            type: el.tags.building,
+                            coordinates: coords.map(n => [n.lon, n.lat]),
+                            // Extract height information
+                            height: el.tags.height || null,
+                            levels: el.tags['building:levels'] || el.tags.levels || null,
+                            roof_shape: el.tags['roof:shape'] || null,
+                            roof_height: el.tags['roof:height'] || null,
+                            // Additional useful tags
+                            amenity: el.tags.amenity || null,
+                            description: el.tags.description || null
+                        };
+
+                        buildings.push(building);
+                    }
+                }
+            });
+
+            return buildings;
+        }
+
+        function displayResults(buildings) {
+            const output = document.getElementById('output');
+
+            // Count buildings with height data
+            const withHeight = buildings.filter(b => b.height || b.levels);
+            const named = buildings.filter(b => b.name);
+
+            let html = `
+                <h3 class="success">✓ Successfully extracted ${buildings.length} buildings</h3>
+                <div class="info">
+                    <strong>${named.length}</strong> buildings with names<br>
+                    <strong>${withHeight.length}</strong> buildings with height/level data
+                </div>
+
+                <h4>Named Buildings:</h4>
+                <ul>
+            `;
+
+            named.forEach(b => {
+                const heightInfo = b.height ? `${b.height}` :
+                                   b.levels ? `${b.levels} levels` :
+                                   'no height data';
+                html += `<li><strong>${b.name}</strong> (${heightInfo})</li>`;
+            });
+
+            html += `</ul>
+                <h4>Sample Building Data (with heights):</h4>
+                <pre>${JSON.stringify(withHeight.slice(0, 3), null, 2)}</pre>
+
+                <h4>Full Dataset (JavaScript format):</h4>
+                <button onclick="downloadData()">Download as JSON</button>
+                <pre id="fullData">${JSON.stringify(buildings, null, 2)}</pre>
+            `;
+
+            output.innerHTML = html;
+
+            // Store data globally for download
+            window.buildingData = buildings;
+
+            // Draw buildings on map
+            buildings.forEach(b => {
+                if (b.coordinates && b.coordinates.length > 2) {
+                    const coords = b.coordinates.map(c => [c[1], c[0]]);
+                    const color = b.height || b.levels ? '#27ae60' : '#e74c3c';
+
+                    L.polygon(coords, {
+                        color: color,
+                        weight: 2,
+                        fillOpacity: 0.3
+                    }).addTo(map).bindPopup(
+                        `<strong>${b.name || 'Unnamed'}</strong><br>` +
+                        `Type: ${b.type}<br>` +
+                        `Height: ${b.height || 'N/A'}<br>` +
+                        `Levels: ${b.levels || 'N/A'}`
+                    );
+                }
+            });
+        }
+
+        function downloadData() {
+            const dataStr = JSON.stringify(window.buildingData, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'pomfret_buildings_3d.json';
+            a.click();
+        }
+    </script>
+</body>
+</html>

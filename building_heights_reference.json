@@ -1,0 +1,113 @@
+{
+  "buildings": [
+    {
+      "name": "VISTA (Science Building)",
+      "square_feet": 22000,
+      "estimated_stories": 2,
+      "estimated_height_meters": 9.0,
+      "type": "academic",
+      "notes": "New 2024, 22,000 sq ft facility with classrooms and labs, central Hub is 2-story",
+      "architectural_style": "modern"
+    },
+    {
+      "name": "du Pont Library",
+      "estimated_stories": 2,
+      "estimated_height_meters": 8.5,
+      "type": "library",
+      "notes": "Multi-level with Technology Dept, Digital Arts Lab, Collaborative Learning Center",
+      "architectural_style": "traditional"
+    },
+    {
+      "name": "Clark Memorial Chapel",
+      "estimated_stories": 1,
+      "estimated_height_meters": 12.0,
+      "type": "chapel",
+      "notes": "Norman-inspired stone chapel with vaulted ceiling - tall single story",
+      "architectural_style": "norman stone",
+      "roof_type": "vaulted"
+    },
+    {
+      "name": "Centennial Academics and Art Center",
+      "estimated_stories": 2,
+      "estimated_height_meters": 8.5,
+      "type": "academic",
+      "notes": "14 classrooms, black box theater, sculpture studio, Cole Studio",
+      "architectural_style": "modern"
+    },
+    {
+      "name": "Main House",
+      "estimated_stories": 2,
+      "estimated_height_meters": 9.0,
+      "type": "dining",
+      "notes": "Dining facility with outdoor Class of 1964 Terraces",
+      "architectural_style": "traditional"
+    },
+    {
+      "name": "Strong Field House",
+      "estimated_stories": 1,
+      "estimated_height_meters": 7.5,
+      "type": "athletic",
+      "notes": "Four indoor tennis courts and wellness studio - high ceiling single story",
+      "architectural_style": "athletic facility"
+    },
+    {
+      "name": "Corzine Athletic Center/OSU",
+      "estimated_stories": 2,
+      "estimated_height_meters": 10.0,
+      "type": "athletic",
+      "notes": "Olmsted Student Union, eight squash courts",
+      "architectural_style": "athletic facility"
+    },
+    {
+      "name": "Pyne Dormitory",
+      "estimated_stories": 3,
+      "estimated_height_meters": 11.0,
+      "type": "dormitory",
+      "notes": "Traditional dormitory",
+      "architectural_style": "traditional"
+    },
+    {
+      "name": "The Bricks (Dunworth/Pontefract)",
+      "estimated_stories": 3,
+      "estimated_height_meters": 11.0,
+      "type": "dormitory",
+      "notes": "Four ivy-covered buildings, early 1900s Collegiate Georgian style",
+      "architectural_style": "collegiate georgian"
+    },
+    {
+      "name": "Plant/Bourne Dormitories",
+      "estimated_stories": 3,
+      "estimated_height_meters": 11.0,
+      "type": "dormitory",
+      "notes": "Traditional dormitory buildings",
+      "architectural_style": "traditional"
+    },
+    {
+      "name": "Picerne House (The Villa)",
+      "estimated_stories": 2,
+      "estimated_height_meters": 7.5,
+      "type": "dormitory",
+      "notes": "Smaller residential building",
+      "architectural_style": "traditional"
+    },
+    {
+      "name": "School Building",
+      "estimated_stories": 2,
+      "estimated_height_meters": 8.0,
+      "type": "academic",
+      "notes": "Modern classrooms with modular furniture",
+      "architectural_style": "modern"
+    }
+  ],
+  "height_standards": {
+    "floor_height_residential": 3.0,
+    "floor_height_academic": 3.5,
+    "floor_height_athletic": 6.0,
+    "chapel_ceiling": 12.0,
+    "notes": "Heights in meters. Athletic facilities have higher ceilings. Chapel has vaulted ceiling."
+  },
+  "conversion": {
+    "meters_to_coordinate_units": 0.00001,
+    "note": "Approximate conversion for visualization scaling"
+  }
+}
