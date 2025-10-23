@@ -1,268 +1,153 @@
-// Pomfret School - Architectural Line Drawing
-// Based on actual building photographs - view from southwest
+// Pomfret School - 3D Isometric View with Hatching
+// Architectural rendering with shaded faces and terrain contours
 
-const buildings = [
-  // VISTA - Modern with vertical metal panels, 3 stories
-  {
-    name:"VISTA",
-    coords:[[-0.0008793,-0.0009797],[-0.0006057,-0.001156],[-0.0007841,-0.00131],[-0.0010577,-0.0011342],[-0.0008793,-0.0009797]],
-    h:0.0009,
-    style:"modern",
-    floors:3,
-    features:"vertical_panels"
-  },
+const D=[[[-0.0007,0.0007],[-0.0006,0.0007],[-0.0006,0.0007],[-0.0006,0.0007],[-0.0006,0.0007],[-0.0006,0.0007],[-0.0005,0.0006],[-0.0006,0.0006],[-0.0006,0.0006],[-0.0006,0.0006],[-0.0006,0.0005],[-0.0006,0.0005],[-0.0006,0.0005],[-0.0007,0.0005],[-0.0007,0.0005],[-0.0008,0.0005],[-0.0008,0.0006],[-0.0008,0.0006],[-0.0008,0.0007],[-0.0008,0.0007],[-0.0008,0.0007],[-0.0007,0.0007],[-0.0007,0.0008],[-0.0007,0.0008],[-0.0007,0.0007]],[[-0.0006,-0.0001],[-0.0006,-0.0002],[-0.0004,-0.0002],[-0.0004,-0.0003],[-0.0004,-0.0003],[-0.0004,-0.0003],[-0.0005,-0.0003],[-0.0005,-0.0004],[-0.0007,-0.0004],[-0.0007,-0.0003],[-0.0008,-0.0003],[-0.0008,-0.0004],[-0.0008,-0.0004],[-0.0008,-0.0004],[-0.0009,-0.0004],[-0.0009,-0.0003],[-0.001,-0.0003],[-0.001,-0.0003],[-0.0011,-0.0003],[-0.0011,-0.0003],[-0.0012,-0.0003],[-0.0012,-0.0004],[-0.0013,-0.0004],[-0.0013,-0.0002],[-0.0011,-0.0002],[-0.0011,-0.0002],[-0.001,-0.0002],[-0.001,-0.0002],[-0.0008,-0.0002],[-0.0008,-0.0001],[-0.0009,-0.0001],[-0.0009,0.0003],[-0.0005,0.0003],[-0.0005,-0.0001],[-0.0006,-0.0001]],[[0.0012,-0.0018],[0.0012,-0.0017],[0.0012,-0.0017],[0.0012,-0.0016],[0.0012,-0.0016],[0.0012,-0.0015],[0.0013,-0.0015],[0.0014,-0.0017],[0.0015,-0.0017],[0.0015,-0.0017],[0.0014,-0.0017],[0.0014,-0.0018],[0.0013,-0.0018],[0.0013,-0.0018],[0.0012,-0.0018]],[[0.0015,-0.0026],[0.0014,-0.0026],[0.0014,-0.0025],[0.0013,-0.0024],[0.0014,-0.0023],[0.0015,-0.0024],[0.0016,-0.0024],[0.0016,-0.0024],[0.0016,-0.0024],[0.0016,-0.0025],[0.0016,-0.0025],[0.0016,-0.0026],[0.0015,-0.0026]],[[0.0011,-0.002],[0.0014,-0.0022],[0.0012,-0.0023],[0.0009,-0.0021],[0.0011,-0.002]],[[0.0009,-0.0024],[0.0009,-0.0025],[0.0009,-0.0025],[0.001,-0.0026],[0.0007,-0.0026],[0.0007,-0.0025],[0.0007,-0.0025],[0.0007,-0.0024],[0.0007,-0.0024],[0.0007,-0.002],[0.0007,-0.002],[0.0007,-0.0019],[0.0009,-0.0019],[0.0009,-0.002],[0.0009,-0.002],[0.0009,-0.0024],[0.0009,-0.0024],[0.0009,-0.0024]],[[0.0,-0.0018],[-0.0002,-0.0019],[-0.0002,-0.0017],[-0.0002,-0.0017],[-0.0002,-0.0016],[-0.0002,-0.0016],[-0.0002,-0.0015],[0.0,-0.0015],[0.0,-0.0018]],[[-0.0003,-0.0013],[-0.0003,-0.0013],[-0.0003,-0.0012],[-0.0003,-0.0012],[-0.0003,-0.0012],[-0.0003,-0.0012],[-0.0003,-0.001],[0.0,-0.001],[0.0,-0.0011],[-0.0001,-0.0011],[-0.0001,-0.0012],[0.0,-0.0012],[0.0,-0.0013],[-0.0003,-0.0013]],[[0.0005,0.0],[0.0005,-0.0001],[0.0006,-0.0001],[0.0006,-0.0002],[0.0006,-0.0002],[0.0006,-0.0002],[0.0005,-0.0002],[0.0005,-0.0002],[0.0004,-0.0002],[0.0004,-0.0001],[0.0004,-0.0001],[0.0004,0.0],[0.0004,-0.0001],[0.0003,0.0002],[0.0004,0.0002],[0.0004,0.0003],[0.0003,0.0003],[0.0003,0.0006],[0.0005,0.0006],[0.0005,0.0003],[0.0005,0.0003],[0.0005,0.0]],[[0.0006,-0.0012],[0.0006,-0.0013],[0.0006,-0.0013],[0.0006,-0.0016],[0.0005,-0.0016],[0.0004,-0.0015],[0.0004,-0.0013],[0.0004,-0.0013],[0.0005,-0.0013],[0.0005,-0.0012],[0.0004,-0.0012],[0.0004,-0.0012],[0.0004,-0.0011],[0.0008,-0.0011],[0.0008,-0.0012],[0.0006,-0.0012]],[[0.0006,-0.0002],[0.0006,-0.0003],[0.0007,-0.0003],[0.0007,-0.0003],[0.0006,-0.0003],[0.0006,-0.0004],[0.0006,-0.0004],[0.0006,-0.0006],[0.0006,-0.0006],[0.0006,-0.0007],[0.0006,-0.0007],[0.0006,-0.001],[0.0004,-0.001],[0.0004,-0.0007],[0.0005,-0.0007],[0.0005,-0.0006],[0.0004,-0.0006],[0.0004,-0.0004],[0.0005,-0.0004],[0.0005,-0.0003],[0.0004,-0.0003],[0.0004,-0.0003],[0.0006,-0.0003],[0.0006,-0.0002],[0.0006,-0.0002]],[[0.0004,-0.0018],[0.0004,-0.0019],[0.0004,-0.0019],[0.0004,-0.0019],[0.0005,-0.0019],[0.0005,-0.002],[0.0001,-0.002],[0.0001,-0.0019],[0.0001,-0.0019],[0.0001,-0.0018],[0.0004,-0.0018]]];
 
-  // Centennial - Red brick with multiple peaked roofs and cupola
-  {
-    name:"Centennial",
-    coords:[[-0.0022814,-0.0003526],[-0.0023107,-0.0003519],[-0.0023165,-0.0001843],[-0.0022872,-0.000185],[-0.00229,-0.0000477],[-0.0023066,-0.0000473],[-0.0023127,0.0001877],[-0.0020485,0.000194],[-0.0020426,0.0000602],[-0.0020734,0.0000594],[-0.0020702,-0.0001853],[-0.0020429,-0.000186],[-0.0020374,-0.0003585],[-0.0022814,-0.0003526]],
-    h:0.0008,
-    style:"peaked",
-    floors:2,
-    features:"cupola"
-  },
-
-  // The Bricks - Georgian with dormers and chimneys
-  {
-    name:"The Bricks",
-    coords:[[-0.0013853,-0.0002533],[-0.0013852,-0.0002442],[-0.0013351,-0.0002447],[-0.0013337,-0.0003589],[-0.0014268,-0.000358],[-0.0014264,-0.0003385],[-0.0014137,-0.0003386],[-0.001409,-0.000661],[-0.0014466,-0.0006606],[-0.0014454,-0.0006852],[-0.0013966,-0.0006856],[-0.001392,-0.0009101],[-0.0015561,-0.0009085],[-0.0015607,-0.0006819],[-0.0015298,-0.0006822],[-0.001531,-0.0006563],[-0.0015734,-0.0006559],[-0.0015781,-0.0003335],[-0.0015332,-0.0003339],[-0.0015336,-0.0003556],[-0.0015503,-0.0003555],[-0.0015517,-0.0002413],[-0.0014366,-0.0002424],[-0.0014368,-0.0002528],[-0.0013853,-0.0002533]],
-    h:0.0011,
-    style:"georgian",
-    floors:3,
-    features:"dormers"
-  },
-
-  // School Building - Collegiate Georgian with cupola
-  {
-    name:"School Building",
-    coords:[[-0.0019714,-0.0008506],[-0.0021652,-0.0008479],[-0.0021691,-0.0006018],[-0.0021858,-0.0006015],[-0.0021873,-0.000535],[-0.0021716,-0.0005352],[-0.0021755,-0.0003193],[-0.0019806,-0.000322],[-0.0019714,-0.0008506]],
-    h:0.0012,
-    style:"peaked",
-    floors:4,
-    features:"cupola_tower"
-  },
-
-  // Chapel - Stone Norman with simple peaked roof
-  {
-    name:"Chapel",
-    coords:[[-0.0007671,-0.0007431],[-0.0007674,-0.000758],[-0.0008163,-0.0007575],[-0.0008184,-0.0006579],[-0.0007719,-0.0006584],[-0.0007755,-0.0004338],[-0.0006536,-0.0004352],[-0.0006497,-0.0006445],[-0.0004879,-0.0006464],[-0.0004868,-0.0006943],[-0.0006465,-0.0006924],[-0.0006455,-0.0007439],[-0.0006799,-0.0007206],[-0.0007351,-0.00072],[-0.0007671,-0.0007431]],
-    h:0.0012,
-    style:"chapel_stone",
-    floors:1,
-    features:"peaked_simple"
-  }
+const heights = [
+  0.0011,  // Pyne Dormitory
+  0.0010,  // Corzine Athletic Center/OSU
+  0.0012,  // Clark Memorial Chapel
+  0.0008,  // Building #21
+  0.0009,  // Building #22
+  0.0009,  // Pomfret Main House
+  0.0008,  // Building #24
+  0.0008,  // Centennial Academics
+  0.0011,  // Plant/Bourne Dormitories
+  0.00085, // Building #27
+  0.0011,  // Dunworth/Pontefract Dorms
+  0.0007   // Building #45
 ];
 
-// View from southwest looking northeast
-const angleX = 25 * Math.PI / 180;
-const angleZ = 225 * Math.PI / 180;
-const scale = 25000;
-const centerX = 0.0001641;
-const centerY = -0.0009395;
+const angleX = 30 * Math.PI / 180;
+const angleZ = 45 * Math.PI / 180;
+const scale = 18000;
+const offsetX = 10;
+const offsetY = -8;
+
+const hatching = 1; /// min=0 max=1 step=1 (No hatching, With hatching)
+const contours = 1; /// min=0 max=1 step=1 (No contours, With contours)
+
+const turtle = new Turtle();
+let polygons;
+let buildingIndex = 0;
 
 function project3D(x, y, z) {
-  const xc = x - centerX;
-  const yc = y - centerY;
-  const x1 = xc * Math.cos(angleZ) - yc * Math.sin(angleZ);
-  const y1 = xc * Math.sin(angleZ) + yc * Math.cos(angleZ);
+  const x1 = x * Math.cos(angleZ) - y * Math.sin(angleZ);
+  const y1 = x * Math.sin(angleZ) + y * Math.cos(angleZ);
   const y2 = y1 * Math.cos(angleX) - z * Math.sin(angleX);
   return [x1, y2];
 }
 
 function walk(i) {
-  const t = new Turtle();
-  if (i >= buildings.length) return false;
+  if (i == 0) {
+    polygons = new Polygons();
+    buildingIndex = 0;
 
-  const bld = buildings[i];
-  const p = bld.coords;
-  const h = bld.h;
-
-  // Draw base footprint
-  let [px, py] = project3D(p[0][0], p[0][1], 0);
-  t.jump(px * scale, py * scale);
-  for (let j = 1; j < p.length; j++) {
-    [px, py] = project3D(p[j][0], p[j][1], 0);
-    t.goto(px * scale, py * scale);
+    // Draw terrain contour lines first
+    if (contours == 1) {
+      drawContours();
+    }
   }
 
-  // Draw walls - only visible faces
+  if (buildingIndex >= D.length) return false;
+
+  const p = D[buildingIndex];
+  if (!p || p.length < 2) {
+    buildingIndex++;
+    return true;
+  }
+
+  const h = heights[buildingIndex] || 0.0006;
+
+  // Draw each visible face as a polygon with hatching
+  drawBuildingFaces(p, h);
+
+  buildingIndex++;
+  return true;
+}
+
+function drawBuildingFaces(p, h) {
+  // Draw vertical faces (walls) that are visible
   for (let j = 0; j < p.length; j++) {
     const k = (j + 1) % p.length;
+
+    // Check if this face is visible
     const dx = p[k][0] - p[j][0];
     const dy = p[k][1] - p[j][1];
     const normal = [-dy, dx];
 
-    if (normal[0] * Math.cos(angleZ) + normal[1] * Math.sin(angleZ) > 0) {
-      let [px0, py0] = project3D(p[j][0], p[j][1], 0);
-      let [px1, py1] = project3D(p[j][0], p[j][1], h);
-      t.jump(px0 * scale, py0 * scale);
-      t.goto(px1 * scale, py1 * scale);
+    // Visibility check
+    const viewDot = normal[0] * Math.cos(angleZ) + normal[1] * Math.sin(angleZ);
+
+    if (viewDot > 0) {
+      // This face is visible - create polygon for it
+      const face = polygons.create();
+
+      const [px0, py0] = project3D(p[j][0], p[j][1], 0);
+      const [px1, py1] = project3D(p[k][0], p[k][1], 0);
+      const [px2, py2] = project3D(p[k][0], p[k][1], h);
+      const [px3, py3] = project3D(p[j][0], p[j][1], h);
+
+      face.addPoints(
+        [px0 * scale + offsetX, py0 * scale + offsetY],
+        [px1 * scale + offsetX, py1 * scale + offsetY],
+        [px2 * scale + offsetX, py2 * scale + offsetY],
+        [px3 * scale + offsetX, py3 * scale + offsetY]
+      );
+
+      if (hatching == 1) {
+        // Hatching angle based on face orientation
+        const faceAngle = Math.atan2(dy, dx);
+        const hatchAngle = faceAngle + Math.PI / 4;
+        face.addHatching(hatchAngle, 2);
+      }
+
+      face.addOutline();
+      polygons.draw(turtle, face, true);
     }
   }
 
-  // ROOF STYLES based on actual photos
-  if (bld.style === "chapel_stone") {
-    // Simple peaked roof
-    const center = p.reduce((acc, pt) => [acc[0] + pt[0]/p.length, acc[1] + pt[1]/p.length], [0, 0]);
-    const ridgeH = h * 1.3;
-    let [cx, cy] = project3D(center[0], center[1], ridgeH);
-
-    for (let j = 0; j < p.length; j++) {
-      const k = (j + 1) % p.length;
-      const dx = p[k][0] - p[j][0];
-      const dy = p[k][1] - p[j][1];
-      const normal = [-dy, dx];
-
-      if (normal[0] * Math.cos(angleZ) + normal[1] * Math.sin(angleZ) > 0) {
-        let [px, py] = project3D(p[j][0], p[j][1], h);
-        t.jump(px * scale, py * scale);
-        t.goto(cx * scale, cy * scale);
-      }
-    }
-
-  } else if (bld.style === "peaked" || bld.style === "georgian") {
-    // Multiple peaked sections (like photos show)
-    const segments = 3; // Multiple roof peaks
-    const segLen = p.length / segments;
-
-    for (let seg = 0; seg < segments; seg++) {
-      const start = Math.floor(seg * segLen);
-      const end = Math.floor((seg + 1) * segLen);
-
-      let segCenter = [0, 0];
-      let count = 0;
-      for (let j = start; j < end && j < p.length; j++) {
-        segCenter[0] += p[j][0];
-        segCenter[1] += p[j][1];
-        count++;
-      }
-      if (count > 0) {
-        segCenter[0] /= count;
-        segCenter[1] /= count;
-
-        const peakH = h * 1.2;
-        let [cx, cy] = project3D(segCenter[0], segCenter[1], peakH);
-
-        for (let j = start; j < end && j < p.length; j++) {
-          const k = (j + 1) % p.length;
-          const dx = p[k][0] - p[j][0];
-          const dy = p[k][1] - p[j][1];
-          const normal = [-dy, dx];
-
-          if (normal[0] * Math.cos(angleZ) + normal[1] * Math.sin(angleZ) > 0) {
-            let [px, py] = project3D(p[j][0], p[j][1], h);
-            t.jump(px * scale, py * scale);
-            t.goto(cx * scale, cy * scale);
-          }
-        }
-      }
-    }
-
-  } else {
-    // VISTA - flat roof with visible edges
-    for (let j = 0; j < p.length; j++) {
-      const k = (j + 1) % p.length;
-      const dx = p[k][0] - p[j][0];
-      const dy = p[k][1] - p[j][1];
-      const normal = [-dy, dx];
-
-      if (normal[0] * Math.cos(angleZ) + normal[1] * Math.sin(angleZ) > 0) {
-        let [px0, py0] = project3D(p[j][0], p[j][1], h);
-        let [px1, py1] = project3D(p[k][0], p[k][1], h);
-        t.jump(px0 * scale, py0 * scale);
-        t.goto(px1 * scale, py1 * scale);
-      }
-    }
+  // Draw roof as outline only (lighter appearance)
+  const roof = polygons.create();
+  const roofPoints = [];
+  for (let j = 0; j < p.length; j++) {
+    const [px, py] = project3D(p[j][0], p[j][1], h);
+    roofPoints.push([px * scale + offsetX, py * scale + offsetY]);
   }
-
-  // FLOOR/DETAIL LINES based on building features
-  if (bld.features === "vertical_panels") {
-    // VISTA - vertical panel lines
-    for (let j = 0; j < p.length; j++) {
-      const k = (j + 1) % p.length;
-      const dx = p[k][0] - p[j][0];
-      const dy = p[k][1] - p[j][1];
-      const edgeLen = Math.sqrt(dx*dx + dy*dy);
-      const normal = [-dy, dx];
-
-      if (normal[0] * Math.cos(angleZ) + normal[1] * Math.sin(angleZ) > 0 && edgeLen > 0.0002) {
-        const numPanels = 8;
-        for (let pan = 1; pan < numPanels; pan++) {
-          const t1 = pan / numPanels;
-          const wx = p[j][0] + dx * t1;
-          const wy = p[j][1] + dy * t1;
-
-          let [wpx0, wpy0] = project3D(wx, wy, 0);
-          let [wpx1, wpy1] = project3D(wx, wy, h);
-          t.jump(wpx0 * scale, wpy0 * scale);
-          t.goto(wpx1 * scale, wpy1 * scale);
-        }
-      }
-    }
-
-  } else if (bld.features === "cupola" || bld.features === "cupola_tower") {
-    // Draw cupola/bell tower on top
-    const center = p.reduce((acc, pt) => [acc[0] + pt[0]/p.length, acc[1] + pt[1]/p.length], [0, 0]);
-    const cupW = 0.0001;
-    const cupH = h * 1.4;
-
-    let [c1x, c1y] = project3D(center[0] - cupW, center[1] - cupW, h * 1.15);
-    let [c2x, c2y] = project3D(center[0] + cupW, center[1] - cupW, h * 1.15);
-    let [c3x, c3y] = project3D(center[0] + cupW, center[1] + cupW, h * 1.15);
-    let [c4x, c4y] = project3D(center[0] - cupW, center[1] + cupW, h * 1.15);
-    let [ctx, cty] = project3D(center[0], center[1], cupH);
-
-    // Draw cupola base
-    t.jump(c1x * scale, c1y * scale);
-    t.goto(c2x * scale, c2y * scale);
-    t.goto(c3x * scale, c3y * scale);
-    t.goto(c4x * scale, c4y * scale);
-    t.goto(c1x * scale, c1y * scale);
-
-    // Draw cupola spire
-    t.jump(c1x * scale, c1y * scale);
-    t.goto(ctx * scale, cty * scale);
-    t.goto(c3x * scale, c3y * scale);
-
-    // Floor lines
-    for (let floor = 1; floor < bld.floors; floor++) {
-      const floorH = (floor / bld.floors) * h;
-      for (let j = 0; j < p.length; j++) {
-        const k = (j + 1) % p.length;
-        const dx = p[k][0] - p[j][0];
-        const dy = p[k][1] - p[j][1];
-        const edgeLen = Math.sqrt(dx*dx + dy*dy);
-        const normal = [-dy, dx];
-
-        if (normal[0] * Math.cos(angleZ) + normal[1] * Math.sin(angleZ) > 0 && edgeLen > 0.0003) {
-          let [px0, py0] = project3D(p[j][0], p[j][1], floorH);
-          let [px1, py1] = project3D(p[k][0], p[k][1], floorH);
-          t.jump(px0 * scale, py0 * scale);
-          t.goto(px1 * scale, py1 * scale);
-        }
-      }
-    }
-
-  } else if (bld.features === "dormers") {
-    // Georgian dormers and floor lines
-    for (let floor = 1; floor < bld.floors; floor++) {
-      const floorH = (floor / bld.floors) * h;
-      for (let j = 0; j < p.length; j++) {
-        const k = (j + 1) % p.length;
-        const dx = p[k][0] - p[j][0];
-        const dy = p[k][1] - p[j][1];
-        const edgeLen = Math.sqrt(dx*dx + dy*dy);
-        const normal = [-dy, dx];
-
-        if (normal[0] * Math.cos(angleZ) + normal[1] * Math.sin(angleZ) > 0 && edgeLen > 0.0003) {
-          let [px0, py0] = project3D(p[j][0], p[j][1], floorH);
-          let [px1, py1] = project3D(p[k][0], p[k][1], floorH);
-          t.jump(px0 * scale, py0 * scale);
-          t.goto(px1 * scale, py1 * scale);
-        }
-      }
-    }
-  }
-
-  return true;
+  roof.addPoints(...roofPoints);
+  roof.addOutline();
+  polygons.draw(turtle, roof, true);
 }
+
+function drawContours() {
+  // Draw subtle terrain contour lines around campus
+  const centerX = -0.0003;
+  const centerY = -0.001;
+
+  for (let elevation = 0; elevation < 8; elevation++) {
+    const radius = 0.0008 + elevation * 0.0003;
+    const numPoints = 48;
+    const contour = polygons.create();
+    const points = [];
+
+    for (let i = 0; i < numPoints; i++) {
+      const angle = (i / numPoints) * Math.PI * 2;
+      const x = centerX + Math.cos(angle) * radius;
+      const y = centerY + Math.sin(angle) * radius * 0.8;
+      const z = elevation * 0.00008;
+
+      const [px, py] = project3D(x, y, z);
+      points.push([px * scale + offsetX, py * scale + offsetY]);
+    }
+
+    contour.addPoints(...points);
+    contour.addOutline();
+    polygons.draw(turtle, contour, false);
+  }
+}
+
+////////////////////////////////////////////////////////////////
+// Polygon Clipping utility code - Created by Reinder Nijhoff 2019
+// https://turtletoy.net/turtle/a5befa1f8d
+////////////////////////////////////////////////////////////////
+function Polygons(){let t=[];const s=class{constructor(){this.cp=[],this.dp=[],this.aabb=[]}addPoints(...t){let s=1e5,e=-1e5,h=1e5,i=-1e5;(this.cp=[...this.cp,...t]).forEach(t=>{s=Math.min(s,t[0]),e=Math.max(e,t[0]),h=Math.min(h,t[1]),i=Math.max(i,t[1])}),this.aabb=[(s+e)/2,(h+i)/2,(e-s)/2,(i-h)/2]}addSegments(...t){t.forEach(t=>this.dp.push(t))}addOutline(){for(let t=0,s=this.cp.length;t<s;t++)this.dp.push(this.cp[t],this.cp[(t+1)%s])}draw(t){for(let s=0,e=this.dp.length;s<e;s+=2)t.jump(this.dp[s]),t.goto(this.dp[s+1])}addHatching(t,e){const h=new s;h.cp.push([-1e5,-1e5],[1e5,-1e5],[1e5,1e5],[-1e5,1e5]);const i=Math.sin(t)*e,n=Math.cos(t)*e,a=200*Math.sin(t),p=200*Math.cos(t);for(let t=.5;t<150/e;t++)h.dp.push([i*t+p,n*t-a],[i*t-p,n*t+a]),h.dp.push([-i*t+p,-n*t-a],[-i*t-p,-n*t+a]);h.boolean(this,!1),this.dp=[...this.dp,...h.dp]}inside(t){let s=0;for(let e=0,h=this.cp.length;e<h;e++)this.segment_intersect(t,[.13,-1e3],this.cp[e],this.cp[(e+1)%h])&&s++;return 1&s}boolean(t,s=!0){if(s&&Math.abs(this.aabb[0]-t.aabb[0])-(t.aabb[2]+this.aabb[2])>=0&&Math.abs(this.aabb[1]-t.aabb[1])-(t.aabb[3]+this.aabb[3])>=0)return this.dp.length>0;const e=[];for(let h=0,i=this.dp.length;h<i;h+=2){const i=this.dp[h],n=this.dp[h+1],a=[];for(let s=0,e=t.cp.length;s<e;s++){const h=this.segment_intersect(i,n,t.cp[s],t.cp[(s+1)%e]);!1!==h&&a.push(h)}if(0===a.length)s===!t.inside(i)&&e.push(i,n);else{a.push(i,n);const h=n[0]-i[0],p=n[1]-i[1];a.sort((t,s)=>(t[0]-i[0])*h+(t[1]-i[1])*p-(s[0]-i[0])*h-(s[1]-i[1])*p);for(let h=0;h<a.length-1;h++)(a[h][0]-a[h+1][0])**2+(a[h][1]-a[h+1][1])**2>=.001&&s===!t.inside([(a[h][0]+a[h+1][0])/2,(a[h][1]+a[h+1][1])/2])&&e.push(a[h],a[h+1])}}return(this.dp=e).length>0}segment_intersect(t,s,e,h){const i=(h[1]-e[1])*(s[0]-t[0])-(h[0]-e[0])*(s[1]-t[1]);if(0===i)return!1;const n=((h[0]-e[0])*(t[1]-e[1])-(h[1]-e[1])*(t[0]-e[0]))/i,a=((s[0]-t[0])*(t[1]-e[1])-(s[1]-t[1])*(t[0]-e[0]))/i;return n>=0&&n<=1&&a>=0&&a<=1&&[t[0]+n*(s[0]-t[0]),t[1]+n*(s[1]-t[1])]}};return{list:()=>t,create:()=>new s,draw:(s,e,h=!0)=>{for(let s=0;s<t.length&&e.boolean(t[s]);s++);e.draw(s),h&&t.push(e)}}}

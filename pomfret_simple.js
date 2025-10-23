@@ -1,20 +1,15 @@
-// Pomfret School Campus - Isometric Architectural Drawing
+// Pomfret School Campus - Simplified Building Outlines
 // Based on LL's terrain renderer approach
 
 // Building footprints as SVG path data (5 key buildings)
 const buildingData = "M -0.0008793 -0.0009797 L -0.0006057 -0.001156 L -0.0007841 -0.00131 L -0.0010577 -0.0011342 L -0.0008793 -0.0009797 M -0.0022814 -0.0003526 L -0.0023107 -0.0003519 L -0.0023165 -0.0001843 L -0.0022872 -0.000185 L -0.00229 -0.0000477 L -0.0023066 -0.0000473 L -0.0023127 0.0001877 L -0.0020485 0.000194 L -0.0020426 0.0000602 L -0.0020734 0.0000594 L -0.0020702 -0.0001853 L -0.0020429 -0.000186 L -0.0020374 -0.0003585 L -0.0022814 -0.0003526 M -0.0013853 -0.0002533 L -0.0013852 -0.0002442 L -0.0013351 -0.0002447 L -0.0013337 -0.0003589 L -0.0014268 -0.000358 L -0.0014264 -0.0003385 L -0.0014137 -0.0003386 L -0.001409 -0.000661 L -0.0014466 -0.0006606 L -0.0014454 -0.0006852 L -0.0013966 -0.0006856 L -0.001392 -0.0009101 L -0.0015561 -0.0009085 L -0.0015607 -0.0006819 L -0.0015298 -0.0006822 L -0.001531 -0.0006563 L -0.0015734 -0.0006559 L -0.0015781 -0.0003335 L -0.0015332 -0.0003339 L -0.0015336 -0.0003556 L -0.0015503 -0.0003555 L -0.0015517 -0.0002413 L -0.0014366 -0.0002424 L -0.0014368 -0.0002528 L -0.0013853 -0.0002533 M -0.0019714 -0.0008506 L -0.0021652 -0.0008479 L -0.0021691 -0.0006018 L -0.0021858 -0.0006015 L -0.0021873 -0.000535 L -0.0021716 -0.0005352 L -0.0021755 -0.0003193 L -0.0019806 -0.000322 L -0.0019714 -0.0008506 M -0.0007671 -0.0007431 L -0.0007674 -0.000758 L -0.0008163 -0.0007575 L -0.0008184 -0.0006579 L -0.0007719 -0.0006584 L -0.0007755 -0.0004338 L -0.0006536 -0.0004352 L -0.0006497 -0.0006445 L -0.0004879 -0.0006464 L -0.0004868 -0.0006943 L -0.0006465 -0.0006924 L -0.0006455 -0.0007439 L -0.0006799 -0.0007206 L -0.0007351 -0.00072 L -0.0007671 -0.0007431";
-
-// Building heights (relative values)
-const buildingHeights = [15, 25, 30, 35, 30]; // VISTA, Centennial, Bricks, School, Chapel
 
 const turtle = new Turtle();
 
 let paths;
 let polygons;
 
-const scale = 30000; // Scale factor for buildings
-const isoAngle = 30 * Math.PI / 180; // Isometric angle for 3D effect
-const heightScale = 0.6; // How tall buildings appear
+const scale = 20000; // Scale factor to fit all buildings in view
 
 function walk(i) {
     if (i == 0) {
@@ -39,56 +34,23 @@ function walk(i) {
 
     // Manually position each building for nice composition
     const positions = [
-        {x: -40, y: 30},    // VISTA - top left
-        {x: 20, y: 35},     // Centennial - top right
-        {x: -35, y: -15},   // The Bricks - center left
-        {x: 15, y: -20},    // School Building - center right
-        {x: -10, y: -50}    // Chapel - bottom center
+        {x: 0, y: 0},    // VISTA - center
+        {x: 0, y: 0},     // Centennial - center
+        {x: 0, y: 0},   // The Bricks - center
+        {x: 0, y: 0},    // School Building - center
+        {x: 0, y: 0}    // Chapel - center
     ];
 
     const buildingIndex = paths.length - 1 - i;
     const pos = positions[buildingIndex];
-    const height = buildingHeights[buildingIndex];
 
-    // Transform points to isometric view
-    function toIso(x, y, z) {
-        const isoX = (x - y) * Math.cos(isoAngle);
-        const isoY = (x + y) * Math.sin(isoAngle) - z * heightScale;
-        return [isoX, isoY];
-    }
-
-    // Draw base (footprint)
-    var basePoints = [];
+    var points = [];
     paths[buildingIndex].forEach(point => {
-        const x = point[0] * scale + pos.x;
-        const y = point[1] * scale + pos.y;
-        const [isoX, isoY] = toIso(x, y, 0);
-        basePoints.push([isoX, isoY]);
+        x = point[0] * scale + pos.x;
+        y = point[1] * scale + pos.y;
+        points.push([x, y]);
     });
-    drawPoints(basePoints);
-
-    // Draw top (extruded footprint)
-    var topPoints = [];
-    paths[buildingIndex].forEach(point => {
-        const x = point[0] * scale + pos.x;
-        const y = point[1] * scale + pos.y;
-        const [isoX, isoY] = toIso(x, y, height);
-        topPoints.push([isoX, isoY]);
-    });
-    drawPoints(topPoints);
-
-    // Draw vertical edges connecting base to top
-    for (let j = 0; j < paths[buildingIndex].length; j++) {
-        const point = paths[buildingIndex][j];
-        const x = point[0] * scale + pos.x;
-        const y = point[1] * scale + pos.y;
-
-        const [x0, y0] = toIso(x, y, 0);
-        const [x1, y1] = toIso(x, y, height);
-
-        turtle.jump([x0, y0]);
-        turtle.goto([x1, y1]);
-    }
+    drawPoints(points);
 
     return i + 1 < paths.length;
 }
