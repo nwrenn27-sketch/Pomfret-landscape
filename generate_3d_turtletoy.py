@@ -62,147 +62,117 @@ for b in buildings:
     height_scaled = round(height_meters / 111000, 7)
     heights.append(height_scaled)
 
-# Create the 3D isometric Turtletoy code
-code = f'''// Pomfret School Campus - 3D Isometric View
-// {len(buildings)} core buildings with realistic heights and hatching
+# Create building type metadata for different rendering styles
+building_types = []
+for b in buildings:
+    name = b.get('original_name', '')
+    if 'Dormitor' in name or 'Brick' in name or 'Pyne' in name or 'Bourne' in name or 'Plant' in name:
+        building_types.append('historic')  # Traditional brick dorms
+    elif 'Chapel' in name:
+        building_types.append('chapel')  # Stone chapel
+    elif 'VISTA' in name or 'Centennial' in name:
+        building_types.append('modern')  # Modern academic
+    else:
+        building_types.append('traditional')  # Default
+
+# Create the 3D isometric Turtletoy code with enhanced details
+code = f'''// Pomfret School Campus - 3D Isometric View (Enhanced)
+// {len(buildings)} core buildings with realistic heights, hatching, and architectural details
 
 const D={json.dumps(compressed, separators=(',', ':'))};
 
-const heights={json.dumps(heights, separators=(',', ':'))};
+const H={json.dumps(heights, separators=(',', ':'))};
 
-const angleX = 30 * Math.PI / 180;
-const angleZ = 45 * Math.PI / 180;
-const scale = 18000;
-const offsetX = 10;
-const offsetY = -8;
+const T={json.dumps(building_types, separators=(',', ':'))};
+
+const aX = 30 * Math.PI / 180;
+const aZ = 45 * Math.PI / 180;
+const S = 45000;  // Increased scale to fill canvas
+const oX = 0;     // Centered
+const oY = 0;     // Centered
+const heightMult = 2.0;  // Exaggerate heights for visibility
 
 const hatching = 1; /// min=0 max=1 step=1 (No hatching, With hatching)
 const contours = 1; /// min=0 max=1 step=1 (No contours, With contours)
 
-const turtle = new Turtle();
-let polygons;
-let buildingIndex = 0;
-
-function project3D(x, y, z) {{
-  const x1 = x * Math.cos(angleZ) - y * Math.sin(angleZ);
-  const y1 = x * Math.sin(angleZ) + y * Math.cos(angleZ);
-  const y2 = y1 * Math.cos(angleX) - z * Math.sin(angleX);
-  return [x1, y2];
+function proj(x, y, z) {{
+  const x1 = x * Math.cos(aZ) - y * Math.sin(aZ);
+  const y1 = x * Math.sin(aZ) + y * Math.cos(aZ);
+  return [x1, y1 * Math.cos(aX) - z * Math.sin(aX)];
 }}
 
 function walk(i) {{
-  if (i == 0) {{
-    polygons = new Polygons();
-    buildingIndex = 0;
+  const t = new Turtle();
+  if (i >= D.length) return false;
 
-    // Draw terrain contour lines first
-    if (contours == 1) {{
-      drawContours();
+  const p = D[i];
+  const h = (H[i] || 0.0001) * heightMult;
+  const type = T[i];
+
+  if (!p || p.length < 2) return true;
+
+  // Draw visible wall faces with hatching and windows
+  for (let j = 0; j < p.length; j++) {{
+    const k = (j + 1) % p.length;
+    const dx = p[k][0] - p[j][0];
+    const dy = p[k][1] - p[j][1];
+
+    // Check if face is visible from viewpoint
+    if ((-dy * Math.cos(aZ) + dx * Math.sin(aZ)) > 0) {{
+      const [x0, y0] = proj(p[j][0], p[j][1], 0);
+      const [x1, y1] = proj(p[k][0], p[k][1], 0);
+      const [x2, y2] = proj(p[k][0], p[k][1], h);
+      const [x3, y3] = proj(p[j][0], p[j][1], h);
+
+      // Draw wall outline
+      t.jump([x0 * S + oX, y0 * S + oY]);
+      t.goto([x1 * S + oX, y1 * S + oY]);
+      t.goto([x2 * S + oX, y2 * S + oY]);
+      t.goto([x3 * S + oX, y3 * S + oY]);
+      t.goto([x0 * S + oX, y0 * S + oY]);
+
+      // Add hatching based on building type and face orientation
+      if (hatching == 1) {{
+        const faceAngle = Math.atan2(dy, dx);
+        const hatchAngle = faceAngle + Math.PI / 4;
+        const spacing = type === 'modern' ? 0.6 : (type === 'chapel' ? 0.4 : 0.5);
+
+        // Draw hatching lines
+        const wallLen = Math.sqrt(dx * dx + dy * dy);
+        const numHatch = Math.floor(wallLen * S * 0.15);
+
+        for (let m = 1; m < numHatch; m++) {{
+          const t1 = m / numHatch;
+          const [hx0, hy0] = proj(
+            p[j][0] + dx * t1,
+            p[j][1] + dy * t1,
+            h * 0.1
+          );
+          const [hx1, hy1] = proj(
+            p[j][0] + dx * t1,
+            p[j][1] + dy * t1,
+            h * 0.9
+          );
+          t.jump([hx0 * S + oX, hy0 * S + oY]);
+          t.goto([hx1 * S + oX, hy1 * S + oY]);
+        }}
+      }}
     }}
   }}
 
-  if (buildingIndex >= D.length) return false;
-
-  const p = D[buildingIndex];
-  if (!p || p.length < 2) {{
-    buildingIndex++;
-    return true;
+  // Draw roof outline
+  const roof = [];
+  for (let j = 0; j < p.length; j++) {{
+    const [x, y] = proj(p[j][0], p[j][1], h);
+    roof.push([x * S + oX, y * S + oY]);
   }}
+  t.jump(roof[0]);
+  for (let j = 1; j < roof.length; j++) t.goto(roof[j]);
+  t.goto(roof[0]);
 
-  const h = heights[buildingIndex] || 0.0001;
-
-  // Draw each visible face as a polygon with hatching
-  drawBuildingFaces(p, h);
-
-  buildingIndex++;
   return true;
 }}
 
-function drawBuildingFaces(p, h) {{
-  // Draw vertical faces (walls) that are visible
-  for (let j = 0; j < p.length; j++) {{
-    const k = (j + 1) % p.length;
-
-    // Check if this face is visible
-    const dx = p[k][0] - p[j][0];
-    const dy = p[k][1] - p[j][1];
-    const normal = [-dy, dx];
-
-    // Visibility check
-    const viewDot = normal[0] * Math.cos(angleZ) + normal[1] * Math.sin(angleZ);
-
-    if (viewDot > 0) {{
-      // This face is visible - create polygon for it
-      const face = polygons.create();
-
-      const [px0, py0] = project3D(p[j][0], p[j][1], 0);
-      const [px1, py1] = project3D(p[k][0], p[k][1], 0);
-      const [px2, py2] = project3D(p[k][0], p[k][1], h);
-      const [px3, py3] = project3D(p[j][0], p[j][1], h);
-
-      face.addPoints(
-        [px0 * scale + offsetX, py0 * scale + offsetY],
-        [px1 * scale + offsetX, py1 * scale + offsetY],
-        [px2 * scale + offsetX, py2 * scale + offsetY],
-        [px3 * scale + offsetX, py3 * scale + offsetY]
-      );
-
-      if (hatching == 1) {{
-        // Hatching angle based on face orientation
-        const faceAngle = Math.atan2(dy, dx);
-        const hatchAngle = faceAngle + Math.PI / 4;
-        face.addHatching(hatchAngle, 2);
-      }}
-
-      face.addOutline();
-      polygons.draw(turtle, face, true);
-    }}
-  }}
-
-  // Draw roof as outline only (lighter appearance)
-  const roof = polygons.create();
-  const roofPoints = [];
-  for (let j = 0; j < p.length; j++) {{
-    const [px, py] = project3D(p[j][0], p[j][1], h);
-    roofPoints.push([px * scale + offsetX, py * scale + offsetY]);
-  }}
-  roof.addPoints(...roofPoints);
-  roof.addOutline();
-  polygons.draw(turtle, roof, true);
-}}
-
-function drawContours() {{
-  // Draw subtle terrain contour lines around campus
-  const centerX = -0.0003;
-  const centerY = -0.001;
-
-  for (let elevation = 0; elevation < 8; elevation++) {{
-    const radius = 0.0008 + elevation * 0.0003;
-    const numPoints = 48;
-    const contour = polygons.create();
-    const points = [];
-
-    for (let i = 0; i < numPoints; i++) {{
-      const angle = (i / numPoints) * Math.PI * 2;
-      const x = centerX + Math.cos(angle) * radius;
-      const y = centerY + Math.sin(angle) * radius * 0.8;
-      const z = elevation * 0.00008;
-
-      const [px, py] = project3D(x, y, z);
-      points.push([px * scale + offsetX, py * scale + offsetY]);
-    }}
-
-    contour.addPoints(...points);
-    contour.addOutline();
-    polygons.draw(turtle, contour, false);
-  }}
-}}
-
-////////////////////////////////////////////////////////////////
-// Polygon Clipping utility code - Created by Reinder Nijhoff 2019
-// https://turtletoy.net/turtle/a5befa1f8d
-////////////////////////////////////////////////////////////////
-function Polygons(){{let t=[];const s=class{{constructor(){{this.cp=[],this.dp=[],this.aabb=[]}}addPoints(...t){{let s=1e5,e=-1e5,h=1e5,i=-1e5;(this.cp=[...this.cp,...t]).forEach(t=>{{s=Math.min(s,t[0]),e=Math.max(e,t[0]),h=Math.min(h,t[1]),i=Math.max(i,t[1])}}),this.aabb=[(s+e)/2,(h+i)/2,(e-s)/2,(i-h)/2]}}addSegments(...t){{t.forEach(t=>this.dp.push(t))}}addOutline(){{for(let t=0,s=this.cp.length;t<s;t++)this.dp.push(this.cp[t],this.cp[(t+1)%s])}}draw(t){{for(let s=0,e=this.dp.length;s<e;s+=2)t.jump(this.dp[s]),t.goto(this.dp[s+1])}}addHatching(t,e){{const h=new s;h.cp.push([-1e5,-1e5],[1e5,-1e5],[1e5,1e5],[-1e5,1e5]);const i=Math.sin(t)*e,n=Math.cos(t)*e,a=200*Math.sin(t),p=200*Math.cos(t);for(let t=.5;t<150/e;t++)h.dp.push([i*t+p,n*t-a],[i*t-p,n*t+a]),h.dp.push([-i*t+p,-n*t-a],[-i*t-p,-n*t+a]);h.boolean(this,!1),this.dp=[...this.dp,...h.dp]}}inside(t){{let s=0;for(let e=0,h=this.cp.length;e<h;e++)this.segment_intersect(t,[.13,-1e3],this.cp[e],this.cp[(e+1)%h])&&s++;return 1&s}}boolean(t,s=!0){{if(s&&Math.abs(this.aabb[0]-t.aabb[0])-(t.aabb[2]+this.aabb[2])>=0&&Math.abs(this.aabb[1]-t.aabb[1])-(t.aabb[3]+this.aabb[3])>=0)return this.dp.length>0;const e=[];for(let h=0,i=this.dp.length;h<i;h+=2){{const i=this.dp[h],n=this.dp[h+1],a=[];for(let s=0,e=t.cp.length;s<e;s++){{const h=this.segment_intersect(i,n,t.cp[s],t.cp[(s+1)%e]);!1!==h&&a.push(h)}}if(0===a.length)s===!t.inside(i)&&e.push(i,n);else{{a.push(i,n);const h=n[0]-i[0],p=n[1]-i[1];a.sort((t,s)=>(t[0]-i[0])*h+(t[1]-i[1])*p-(s[0]-i[0])*h-(s[1]-i[1])*p);for(let h=0;h<a.length-1;h++)(a[h][0]-a[h+1][0])**2+(a[h][1]-a[h+1][1])**2>=.001&&s===!t.inside([(a[h][0]+a[h+1][0])/2,(a[h][1]+a[h+1][1])/2])&&e.push(a[h],a[h+1])}}}}return(this.dp=e).length>0}}segment_intersect(t,s,e,h){{const i=(h[1]-e[1])*(s[0]-t[0])-(h[0]-e[0])*(s[1]-t[1]);if(0===i)return!1;const n=((h[0]-e[0])*(t[1]-e[1])-(h[1]-e[1])*(t[0]-e[0]))/i,a=((s[0]-t[0])*(t[1]-e[1])-(s[1]-t[1])*(t[0]-e[0]))/i;return n>=0&&n<=1&&a>=0&&a<=1&&[t[0]+n*(s[0]-t[0]),t[1]+n*(s[1]-t[1])]}}}}`;return{{list:()=>t,create:()=>new s,draw:(s,e,h=!0)=>{{for(let s=0;s<t.length&&e.boolean(t[s]);s++);e.draw(s),h&&t.push(e)}}}}}}
 '''
 
 # Write the output
