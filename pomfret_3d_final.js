@@ -7,7 +7,7 @@ const H=[9.91e-05,9.01e-05,0.0001081,7.21e-05,7.21e-05,8.11e-05,7.21e-05,7.66e-0
 
 const T=["historic","traditional","chapel","traditional","traditional","traditional","traditional","modern","historic","traditional","historic","traditional"];
 
-const aX = 30 * Math.PI / 180;
+const aX = 20 * Math.PI / 180;  // Shallower view for dramatic height
 const aZ = 45 * Math.PI / 180;
 const S = 30000;  // Optimized scale to show all buildings with detail
 const oX = 0;     // Centered

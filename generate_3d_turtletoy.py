@@ -85,7 +85,7 @@ const H={json.dumps(heights, separators=(',', ':'))};
 
 const T={json.dumps(building_types, separators=(',', ':'))};
 
-const aX = 30 * Math.PI / 180;
+const aX = 20 * Math.PI / 180;  // Shallower view for dramatic height
 const aZ = 45 * Math.PI / 180;
 const S = 30000;  // Optimized scale to show all buildings with detail
 const oX = 0;     // Centered
