@@ -9,7 +9,7 @@ const T=["historic","traditional","chapel","traditional","traditional","traditio
 
 const aX = 30 * Math.PI / 180;
 const aZ = 45 * Math.PI / 180;
-const S = 45000;  // Increased scale to fill canvas
+const S = 30000;  // Optimized scale to show all buildings with detail
 const oX = 0;     // Centered
 const oY = 0;     // Centered
 const heightMult = 2.0;  // Exaggerate heights for visibility
