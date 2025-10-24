@@ -8,7 +8,7 @@ const H=[9.91e-05,9.01e-05,0.0001081,7.21e-05,7.21e-05,8.11e-05,7.21e-05,7.66e-0
 const T=["historic","traditional","chapel","traditional","traditional","traditional","traditional","modern","historic","traditional","historic","traditional"];
 
 const aX = 30 * Math.PI / 180;
-const aZ = 30 * Math.PI / 180;  // Different rotation angle
+const aZ = 60 * Math.PI / 180;  // More dramatic rotation difference
 const S = 30000;  // Optimized scale to show all buildings with detail
 const oX = 0;     // Centered
 const oY = 0;     // Centered
