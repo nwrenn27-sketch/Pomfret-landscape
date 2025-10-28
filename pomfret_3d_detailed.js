@@ -1,226 +1,78 @@
-// Pomfret School Campus - 3D Isometric View (Detailed) v2.0
-// 12 core buildings with windows, roof details, and shadows
-// Scale: 55000 for full canvas coverage
-
+// Pomfret School Campus - 3D Isometric View (Detailed)
 const D=[[[-0.0006607,0.0007375],[-0.0006216,0.0007379],[-0.0006206,0.0006785],[-0.0006076,0.0006786],[-0.0006072,0.0006579],[-0.0005503,0.0006584],[-0.0005498,0.0006286],[-0.0006083,0.000628],[-0.0006079,0.0006073],[-0.0006212,0.0006072],[-0.0006202,0.0005498],[-0.0006422,0.0005496],[-0.000642,0.0005344],[-0.0007044,0.0005338],[-0.0007047,0.0005479],[-0.0007612,0.0005474],[-0.0007622,0.0006057],[-0.000786,0.0006055],[-0.0007873,0.0006766],[-0.0007621,0.0006768],[-0.0007631,0.0007363],[-0.0006944,0.000737],[-0.0006946,0.0007521],[-0.000661,0.0007525],[-0.0006607,0.0007375]],[[-0.0006272,-7.58e-05],[-0.0006216,-0.0001757],[-0.0004463,-0.0001703],[-0.0004378,-0.0003216],[-0.0004117,-0.0003208],[-0.0004105,-0.000342],[-0.0004873,-0.0003443],[-0.0004862,-0.000364],[-0.0007299,-0.0003716],[-0.0007319,-0.0003358],[-0.0007832,-0.0003374],[-0.0007809,-0.0003778],[-0.0008473,-0.0003799],[-0.000848,-0.000368],[-0.0009128,-0.0003701],[-0.0009144,-0.0003414],[-0.0009562,-0.0003427],[-0.0009568,-0.0003314],[-0.0010592,-0.0003346],[-0.0010587,-0.0003441],[-0.0011623,-0.0003474],[-0.0011583,-0.0004175],[-0.0013091,-0.0004222],[-0.001319,-0.0002463],[-0.001092,-0.0002393],[-0.0010931,-0.0002199],[-0.0009614,-0.0002158],[-0.000963,-0.0001869],[-0.0007561,-0.0001804],[-0.0007618,-7.88e-05],[-0.0008714,-8.22e-05],[-0.0008904,0.0002544],[-0.0005497,0.000265],[-0.0005308,-7.28e-05],[-0.0006272,-7.58e-05]],[[0.0012329,-0.0017569],[0.0012326,-0.001742],[0.0011837,-0.0017425],[0.0011816,-0.0016421],[0.0012281,-0.0016416],[0.0012245,-0.0014662],[0.0013464,-0.0014648],[0.0013503,-0.0016555],[0.0015121,-0.0016536],[0.0015132,-0.0017057],[0.0013535,-0.0017076],[0.0013545,-0.0017561],[0.0013201,-0.0017794],[0.0012649,-0.00178],[0.0012329,-0.0017569]],[[0.0015051,-0.0025612],[0.0014426,-0.0025617],[0.001441,-0.002451],[0.0013105,-0.0023764],[0.0013599,-0.0023267],[0.0015079,-0.002413],[0.0016002,-0.0024123],[0.0016006,-0.0024463],[0.0016463,-0.0024459],[0.0016472,-0.0025097],[0.0016013,-0.0025101],[0.001602,-0.0025604],[0.0015051,-0.0025612]],[[0.0011207,-0.0019803],[0.0013943,-0.002156],[0.0012159,-0.00231],[0.0009423,-0.0021342],[0.0011207,-0.0019803]],[[0.0009098,-0.0024444],[0.0009128,-0.0024945],[0.0009457,-0.0024935],[0.0009533,-0.0026238],[0.0007173,-0.0026314],[0.0007096,-0.0024997],[0.0007251,-0.0024992],[0.0007188,-0.0023918],[0.0006943,-0.0023926],[0.0006729,-0.0020251],[0.0007103,-0.0020238],[0.0007037,-0.0019112],[0.0008856,-0.0019053],[0.0008924,-0.0020209],[0.0009049,-0.0020205],[0.0009262,-0.0023849],[0.0009064,-0.0023856],[0.0009098,-0.0024444]],[[2.86e-05,-0.0018494],[-0.0001652,-0.0018521],[-0.0001691,-0.0016982],[-0.0001858,-0.0016985],[-0.0001873,-0.001635],[-0.0001716,-0.0016348],[-0.0001755,-0.0014807],[1.94e-05,-0.001478],[2.86e-05,-0.0018494]],[[-0.0002814,-0.0013474],[-0.0003107,-0.0013481],[-0.0003165,-0.0012157],[-0.0002872,-0.001215],[-0.00029,-0.0011523],[-0.0003066,-0.0011527],[-0.0003127,-0.0010123],[-4.85e-05,-0.001006],[-4.26e-05,-0.0011398],[-7.34e-05,-0.0011406],[-7.02e-05,-0.0012147],[-4.29e-05,-0.001214],[-3.74e-05,-0.0013415],[-0.0002814,-0.0013474]],[[0.0005185,-4.18e-05],[0.0005197,-6.79e-05],[0.0006123,-6.56e-05],[0.0006163,-0.0001539],[0.0005548,-0.0001554],[0.0005552,-0.000166],[0.0005112,-0.0001671],[0.0005106,-0.0001534],[0.0003995,-0.0001562],[0.0003956,-6.96e-05],[0.0004041,-6.94e-05],[0.0004032,-4.99e-05],[0.0003559,-5.11e-05],[0.0003435,0.0002229],[0.0003772,0.0002238],[0.0003738,0.0003001],[0.0003345,0.0002991],[0.000322,0.0005745],[0.00048,0.0005785],[0.0004921,0.0003121],[0.0005025,0.0003123],[0.0005185,-4.18e-05]],[[0.000592,-0.0012142],[0.0005945,-0.0012957],[0.0006143,-0.0012954],[0.0006234,-0.0015817],[0.0004515,-0.0015847],[0.000449,-0.0015054],[0.000444,-0.0013484],[0.0004425,-0.0012987],[0.000511,-0.0012975],[0.0005086,-0.0012212],[0.0004321,-0.0012226],[0.0003855,-0.0012234],[0.0003804,-0.0010642],[0.0008449,-0.0010561],[0.0008498,-0.0012097],[0.000592,-0.0012142]],[[0.0006147,-0.0002467],[0.0006148,-0.0002558],[0.0006649,-0.0002553],[0.0006663,-0.0003411],[0.0005732,-0.000342],[0.0005736,-0.0003615],[0.0005863,-0.0003614],[0.000591,-0.000639],[0.0005534,-0.0006394],[0.0005546,-0.0007148],[0.0006034,-0.0007144],[0.000608,-0.0009899],[0.0004439,-0.0009915],[0.0004393,-0.0007181],[0.0004702,-0.0007178],[0.000469,-0.0006437],[0.0004266,-0.0006441],[0.0004219,-0.0003665],[0.0004668,-0.0003661],[0.0004664,-0.0003444],[0.0004497,-0.0003445],[0.0004483,-0.0002587],[0.0005634,-0.0002576],[0.0005632,-0.0002472],[0.0006147,-0.0002467]],[[0.0003536,-0.0018023],[0.0003548,-0.0018603],[0.0004104,-0.0018596],[0.0004114,-0.0019062],[0.0004864,-0.0019053],[0.0004889,-0.0020236],[9.59e-05,-0.0020283],[9.24e-05,-0.001865],[0.000108,-0.0018648],[0.0001067,-0.0018052],[0.0003536,-0.0018023]]];
-
 const H=[9.91e-05,9.01e-05,0.0001081,7.21e-05,7.21e-05,8.11e-05,7.21e-05,7.66e-05,9.91e-05,7.21e-05,9.91e-05,7.21e-05];
-
 const T=["historic","traditional","chapel","traditional","traditional","traditional","traditional","modern","historic","traditional","historic","traditional"];
+const aX=35*Math.PI/180,aZ=45*Math.PI/180,S=42000,heightMult=2.0;
+const offsetX=-35;/// min=-50 max=50 step=5 (Pan left/right)
+const offsetY=10;/// min=-50 max=50 step=5 (Pan up/down)
+const showWindows=1;/// min=0 max=1 step=1 (No windows, With windows)
+const showRoofDetails=1;/// min=0 max=1 step=1 (No roof details, With roof details)
+const showShadows=1;/// min=0 max=1 step=1 (No shadows, With shadows)
+const hatching=1;/// min=0 max=1 step=1 (No hatching, With hatching)
 
-const aX = 35 * Math.PI / 180;  // Higher angle for more eye-level view
-const aZ = 45 * Math.PI / 180;
-const S = 55000;  // Increased scale to fill canvas
-const oX = 0;
-const oY = 0;
-const heightMult = 2.0;
+function proj(x,y,z){const x1=x*Math.cos(aZ)-y*Math.sin(aZ),y1=x*Math.sin(aZ)+y*Math.cos(aZ);return[x1,y1*Math.cos(aX)-z*Math.sin(aX)]}
 
-const showWindows = 1; /// min=0 max=1 step=1 (No windows, With windows)
-const showRoofDetails = 1; /// min=0 max=1 step=1 (No roof details, With roof details)
-const showShadows = 1; /// min=0 max=1 step=1 (No shadows, With shadows)
-const hatching = 1; /// min=0 max=1 step=1 (No hatching, With hatching)
+function walk(i){
+  const t=new Turtle();
+  if(i>=D.length)return false;
+  const p=D[i],h=(H[i]||1e-4)*heightMult,type=T[i];
+  if(!p||p.length<2)return true;
 
-function proj(x, y, z) {
-  const x1 = x * Math.cos(aZ) - y * Math.sin(aZ);
-  const y1 = x * Math.sin(aZ) + y * Math.cos(aZ);
-  return [x1, y1 * Math.cos(aX) - z * Math.sin(aX)];
-}
-
-function walk(i) {
-  const t = new Turtle();
-  if (i >= D.length) return false;
-
-  const p = D[i];
-  const h = (H[i] || 0.0001) * heightMult;
-  const type = T[i];
-
-  if (!p || p.length < 2) return true;
-
-  // Draw ground shadow first
-  if (showShadows == 1) {
-    drawShadow(t, p);
+  // Shadow
+  if(showShadows){
+    const sh=p.map(v=>proj(v[0]+8e-5,v[1]-8e-5,-1e-5)).map(v=>[v[0]*S+offsetX,v[1]*S+offsetY]);
+    t.jump(sh[0]);sh.forEach(v=>t.goto(v));t.goto(sh[0]);
   }
 
-  // Draw visible wall faces with hatching and windows
-  for (let j = 0; j < p.length; j++) {
-    const k = (j + 1) % p.length;
-    const dx = p[k][0] - p[j][0];
-    const dy = p[k][1] - p[j][1];
+  // Walls
+  for(let j=0;j<p.length;j++){
+    const k=(j+1)%p.length,dx=p[k][0]-p[j][0],dy=p[k][1]-p[j][1];
+    if((-dy*Math.cos(aZ)+dx*Math.sin(aZ))>0){
+      const [x0,y0]=proj(p[j][0],p[j][1],0),[x1,y1]=proj(p[k][0],p[k][1],0),
+            [x2,y2]=proj(p[k][0],p[k][1],h),[x3,y3]=proj(p[j][0],p[j][1],h);
+      t.jump([x0*S+offsetX,y0*S+offsetY]);t.goto([x1*S+offsetX,y1*S+offsetY]);t.goto([x2*S+offsetX,y2*S+offsetY]);t.goto([x3*S+offsetX,y3*S+offsetY]);t.goto([x0*S+offsetX,y0*S+offsetY]);
 
-    // Check if face is visible from viewpoint
-    if ((-dy * Math.cos(aZ) + dx * Math.sin(aZ)) > 0) {
-      const [x0, y0] = proj(p[j][0], p[j][1], 0);
-      const [x1, y1] = proj(p[k][0], p[k][1], 0);
-      const [x2, y2] = proj(p[k][0], p[k][1], h);
-      const [x3, y3] = proj(p[j][0], p[j][1], h);
-
-      // Draw wall outline
-      t.jump([x0 * S + oX, y0 * S + oY]);
-      t.goto([x1 * S + oX, y1 * S + oY]);
-      t.goto([x2 * S + oX, y2 * S + oY]);
-      t.goto([x3 * S + oX, y3 * S + oY]);
-      t.goto([x0 * S + oX, y0 * S + oY]);
-
-      // Add windows
-      if (showWindows == 1) {
-        drawWindows(t, p[j][0], p[j][1], p[k][0], p[k][1], h, type);
+      // Windows
+      if(showWindows){
+        const wl=Math.sqrt(dx*dx+dy*dy);
+        const [cols,rows,mH,mV,wW,wH]=type==='chapel'?[Math.max(2,~~(wl*S/12)),2,0.2,0.15,0.025,0.2]:
+          type==='modern'?[Math.max(2,~~(wl*S/10)),2,0.15,0.2,0.06,0.12]:[Math.max(2,~~(wl*S/10)),2,0.2,0.2,0.04,0.1];
+        for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+          const tH=mH+(c+0.5)*(1-2*mH)/cols,tV=mV+(r+0.5)*(1-2*mV)/rows;
+          const cx=p[j][0]+dx*tH,cy=p[j][1]+dy*tH,cz=h*tV;
+          const [w0,w1]=proj(cx-dx*wW*0.5,cy-dy*wW*0.5,cz-h*wH*0.5),[w2,w3]=proj(cx+dx*wW*0.5,cy+dy*wW*0.5,cz-h*wH*0.5),
+                [w4,w5]=proj(cx+dx*wW*0.5,cy+dy*wW*0.5,cz+h*wH*0.5),[w6,w7]=proj(cx-dx*wW*0.5,cy-dy*wW*0.5,cz+h*wH*0.5);
+          t.jump([w0*S+offsetX,w1*S+offsetY]);t.goto([w2*S+offsetX,w3*S+offsetY]);t.goto([w4*S+offsetX,w5*S+offsetY]);t.goto([w6*S+offsetX,w7*S+offsetY]);t.goto([w0*S+offsetX,w1*S+offsetY]);
+        }
       }
 
-      // Add hatching based on building type - reduced density
-      if (hatching == 1) {
-        const wallLen = Math.sqrt(dx * dx + dy * dy);
-        const numHatch = Math.floor(wallLen * S * 0.08);
-
-        for (let m = 1; m < numHatch; m++) {
-          const t1 = m / numHatch;
-          const [hx0, hy0] = proj(
-            p[j][0] + dx * t1,
-            p[j][1] + dy * t1,
-            h * 0.2
-          );
-          const [hx1, hy1] = proj(
-            p[j][0] + dx * t1,
-            p[j][1] + dy * t1,
-            h * 0.8
-          );
-          t.jump([hx0 * S + oX, hy0 * S + oY]);
-          t.goto([hx1 * S + oX, hy1 * S + oY]);
+      // Hatching
+      if(hatching){
+        const wl=Math.sqrt(dx*dx+dy*dy),nH=~~(wl*S*0.08);
+        for(let m=1;m<nH;m++){
+          const t1=m/nH,[hx0,hy0]=proj(p[j][0]+dx*t1,p[j][1]+dy*t1,h*0.2),[hx1,hy1]=proj(p[j][0]+dx*t1,p[j][1]+dy*t1,h*0.8);
+          t.jump([hx0*S+offsetX,hy0*S+offsetY]);t.goto([hx1*S+offsetX,hy1*S+offsetY]);
         }
       }
     }
   }
 
-  // Draw roof outline
-  const roof = [];
-  for (let j = 0; j < p.length; j++) {
-    const [x, y] = proj(p[j][0], p[j][1], h);
-    roof.push([x * S + oX, y * S + oY]);
-  }
-  t.jump(roof[0]);
-  for (let j = 1; j < roof.length; j++) t.goto(roof[j]);
-  t.goto(roof[0]);
+  // Roof
+  const rf=p.map(v=>proj(v[0],v[1],h)).map(v=>[v[0]*S+offsetX,v[1]*S+offsetY]);
+  t.jump(rf[0]);rf.slice(1).forEach(v=>t.goto(v));t.goto(rf[0]);
 
-  // Draw roof details (ridgelines)
-  if (showRoofDetails == 1) {
-    drawRoofDetails(t, p, h, type);
+  // Roof details
+  if(showRoofDetails&&type!=='modern'){
+    let mx=0,mi=0;
+    for(let j=0;j<p.length;j++){
+      const k=(j+1)%p.length,ln=Math.sqrt((p[k][0]-p[j][0])**2+(p[k][1]-p[j][1])**2);
+      if(ln>mx){mx=ln;mi=j;}
+    }
+    const j=mi,k=(j+1)%p.length,rH=type==='chapel'?h*1.15:h*1.08;
+    const [r0,r1]=proj((p[j][0]+p[k][0])*0.5,(p[j][1]+p[k][1])*0.5,rH);
+    const j2=(j+2)%p.length,[r2,r3]=proj((p[j2][0]+p[(j2+1)%p.length][0])*0.5,(p[j2][1]+p[(j2+1)%p.length][1])*0.5,rH);
+    t.jump([r0*S+offsetX,r1*S+offsetY]);t.goto([r2*S+offsetX,r3*S+offsetY]);
   }
 
   return true;
-}
-
-function drawWindows(t, x0, y0, x1, y1, h, type) {
-  const dx = x1 - x0;
-  const dy = y1 - y0;
-  const wallLen = Math.sqrt(dx * dx + dy * dy);
-
-  // Window configuration based on building type - reduced density
-  let cols, rows, marginH, marginV, winW, winH;
-
-  if (type === 'chapel') {
-    cols = Math.max(2, Math.floor(wallLen * S / 12));
-    rows = 2;
-    marginH = 0.2;
-    marginV = 0.15;
-    winW = 0.025;
-    winH = 0.2;
-  } else if (type === 'modern') {
-    cols = Math.max(2, Math.floor(wallLen * S / 10));
-    rows = 2;
-    marginH = 0.15;
-    marginV = 0.2;
-    winW = 0.06;
-    winH = 0.12;
-  } else {
-    cols = Math.max(2, Math.floor(wallLen * S / 10));
-    rows = 2;
-    marginH = 0.2;
-    marginV = 0.2;
-    winW = 0.04;
-    winH = 0.1;
-  }
-
-  for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
-      const tH = marginH + (col + 0.5) * (1 - 2 * marginH) / cols;
-      const tV = marginV + (row + 0.5) * (1 - 2 * marginV) / rows;
-
-      const cx = x0 + dx * tH;
-      const cy = y0 + dy * tH;
-      const cz = h * tV;
-
-      // Draw small window rectangle
-      const [wx0, wy0] = proj(cx - dx * winW * 0.5, cy - dy * winW * 0.5, cz - h * winH * 0.5);
-      const [wx1, wy1] = proj(cx + dx * winW * 0.5, cy + dy * winW * 0.5, cz - h * winH * 0.5);
-      const [wx2, wy2] = proj(cx + dx * winW * 0.5, cy + dy * winW * 0.5, cz + h * winH * 0.5);
-      const [wx3, wy3] = proj(cx - dx * winW * 0.5, cy - dy * winW * 0.5, cz + h * winH * 0.5);
-
-      t.jump([wx0 * S + oX, wy0 * S + oY]);
-      t.goto([wx1 * S + oX, wy1 * S + oY]);
-      t.goto([wx2 * S + oX, wy2 * S + oY]);
-      t.goto([wx3 * S + oX, wy3 * S + oY]);
-      t.goto([wx0 * S + oX, wy0 * S + oY]);
-    }
-  }
-}
-
-function drawRoofDetails(t, p, h, type) {
-  // Draw roof ridgeline for gabled roofs
-  if (type !== 'modern') {
-    // Find longest edge to use as ridge direction
-    let maxLen = 0;
-    let maxIdx = 0;
-    for (let j = 0; j < p.length; j++) {
-      const k = (j + 1) % p.length;
-      const len = Math.sqrt(
-        Math.pow(p[k][0] - p[j][0], 2) +
-        Math.pow(p[k][1] - p[j][1], 2)
-      );
-      if (len > maxLen) {
-        maxLen = len;
-        maxIdx = j;
-      }
-    }
-
-    // Create ridge along longest axis
-    const j = maxIdx;
-    const k = (j + 1) % p.length;
-    const ridgeH = type === 'chapel' ? h * 1.15 : h * 1.08;
-
-    const [rx0, ry0] = proj(
-      (p[j][0] + p[k][0]) * 0.5,
-      (p[j][1] + p[k][1]) * 0.5,
-      ridgeH
-    );
-    const j2 = (j + 2) % p.length;
-    const [rx1, ry1] = proj(
-      (p[j2][0] + p[(j2 + 1) % p.length][0]) * 0.5,
-      (p[j2][1] + p[(j2 + 1) % p.length][1]) * 0.5,
-      ridgeH
-    );
-
-    t.jump([rx0 * S + oX, ry0 * S + oY]);
-    t.goto([rx1 * S + oX, ry1 * S + oY]);
-  }
-}
-
-function drawShadow(t, p) {
-  // Cast shadow on ground plane, offset based on sun angle
-  const shadowOffX = 0.00008;
-  const shadowOffY = -0.00008;
-
-  const shadow = [];
-  for (let j = 0; j < p.length; j++) {
-    const [x, y] = proj(
-      p[j][0] + shadowOffX,
-      p[j][1] + shadowOffY,
-      -0.00001
-    );
-    shadow.push([x * S + oX, y * S + oY]);
-  }
-
-  t.jump(shadow[0]);
-  for (let j = 1; j < shadow.length; j++) {
-    t.goto(shadow[j]);
-  }
-  t.goto(shadow[0]);
 }
