@@ -1,113 +1,278 @@
-# Pomfret School Campus - Architectural Line Drawing
+# Pomfret School Campus - 3D Visualization
 
-Architectural line-art visualization of Pomfret School's 5 key buildings for Turtletoy/Makelangelo plotting.
+<div align="center">
 
-## Final Output
+![Project Banner](https://img.shields.io/badge/3D%20Visualization-Campus%20Design-blue?style=for-the-badge)
+[![TurtleToy](https://img.shields.io/badge/TurtleToy-Interactive-green?style=for-the-badge)](https://turtletoy.net)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-**`pomfret_campus.js`** - Turtletoy code rendering 5 key campus buildings with distinctive architectural features
+*An interactive 3D isometric visualization of Pomfret School's campus using vector graphics*
 
-### Features
-- View from southwest looking northeast (225° rotation, 25° tilt)
-- Architectural details based on actual building photographs
-- Distinctive features for each building style
-- Optimized scale (25,000x) for clear visibility
-- Clean line-art suitable for pen plotting
+[View Demo](#demo) · [Report Bug](https://github.com/yourusername/pomfret-design/issues) · [Request Feature](https://github.com/yourusername/pomfret-design/issues)
 
-## Buildings Included
+</div>
 
-### 5 Key Buildings
-1. **VISTA** - Modern science building with vertical metal panel lines (3 stories, 9m)
-2. **Centennial** - Academic/arts building with peaked roofs and cupola (2 stories, 8m)
-3. **The Bricks (Dunworth/Pontefract)** - Georgian dormitories with dormers (3 stories, 11m)
-4. **School Building** - Collegiate Georgian with tall cupola tower (4 stories, 12m)
-5. **Clark Memorial Chapel** - Norman stone with simple peaked roof (1 story, 12m vaulted)
+---
 
-### Architectural Features Captured
-- **VISTA**: Vertical metal panel lines (8 panels per visible wall)
-- **Centennial & School Building**: Cupola/bell towers on rooftops
-- **Traditional buildings**: Multiple peaked roof sections
-- **The Bricks**: Georgian floor lines and dormers
-- **Chapel**: Simple peaked roof with ridge
+## 📋 Table of Contents
 
-## Quick Start
+- [About The Project](#about-the-project)
+- [Features](#features)
+- [Built With](#built-with)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Interactive Controls](#interactive-controls)
+- [Project Structure](#project-structure)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+- [Acknowledgments](#acknowledgments)
 
-### Using on Turtletoy
-1. Go to https://turtletoy.net/turtle/new
-2. Copy contents of `pomfret_campus.js`
-3. Paste into editor
-4. Click "Run" to see visualization
+---
 
-### Exporting for Makelangelo Plotter
-1. Run on Turtletoy
-2. Export as SVG (... menu → Export to SVG)
-3. Import SVG to Makelangelo software
-4. Configure for Makelangelo Huge model
-5. Plot!
+## 🎯 About The Project
 
-### Makelangelo Settings
-- **Pen width**: 0.3-0.5mm
-- **Feed rate**: 50-80 mm/s
-- **Line style**: Single continuous lines (no fill)
+This project creates an interactive 3D visualization of Pomfret School's campus using TurtleToy's vector graphics engine. The visualization features accurate building geometries extracted from OpenStreetMap data, with proper architectural details including windows, doors, and rooflines.
 
-## Project Files
+### Why This Project?
 
-### Essential Files
-- **`pomfret_campus.js`** - Final architectural line drawing (5 buildings)
-- **`building_heights_reference.json`** - Research-based building measurements
-- **`final_campus_buildings.json`** - Original 12 buildings dataset (for reference)
+- **Educational**: Demonstrates 3D projection mathematics and isometric rendering
+- **Interactive**: Explore campus from multiple angles with smooth animations
+- **Data-Driven**: Uses real geospatial data from OpenStreetMap
+- **Performance**: Pure vector graphics for infinite scalability
 
-### Data Tools
-- **`extract_osm_data.html`** - Interactive OSM data extractor
-- **`extract_detailed_buildings.html`** - Enhanced shape extractor
-- **`extract_3d_buildings.html`** - Height data extractor
-- **`process_osm_data.py`** - Converts OSM JSON to JavaScript
-- **`generate_final_turtletoy.py`** - Generates Turtletoy code
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-### Reference Data
-- **`building_data.js`** - Full OSM data (486 buildings)
-- **`detailed_building_shapes.json`** - Complex footprints with all points
-- **`osm_detailed_buildings.json`** - Raw OSM data
+---
 
-## Technical Details
+## ✨ Features
 
-### Viewing Angle
-```javascript
-angleX = 25° (tilt down from horizontal)
-angleZ = 225° (view from southwest, looking northeast)
-scale = 25,000 (optimized for 5 buildings)
+### Core Visualization
+- ✅ **12 Campus Buildings** with accurate footprints from OSM data
+- ✅ **3D Isometric Projection** with configurable viewing angles
+- ✅ **Architectural Details**: Windows, doors, and roof structures
+- ✅ **Building-Specific Textures**:
+  - Historic buildings with brick patterns
+  - Modern buildings with glass panels
+  - Chapel with stone texture and cross
+  - Traditional buildings with siding
+
+### Interactive Controls
+- 🎥 **Animated Camera Tour** (360° rotation)
+- 🌅 **Time-of-Day Lighting** (dawn to dusk simulation)
+- 🏗️ **Exploded View Mode** (separate buildings vertically)
+- 🏷️ **Building Labels** (toggle names)
+- 📐 **5 View Presets** (Standard, Aerial, Architectural, Dramatic, Visitor)
+- 🌳 **Landscape Features** (pathways, trees, contours)
+
+### Technical Features
+- Real-time rendering using turtle graphics
+- Mathematically accurate 3D→2D projection
+- Backface culling for proper depth
+- Material-aware hatching patterns
+- Responsive parameter controls
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+## 🛠️ Built With
+
+* **JavaScript** - Core rendering logic
+* **TurtleToy** - Vector graphics engine
+* **Python** - Data processing and geometry generation
+* **OpenStreetMap** - Building geospatial data
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+For running the visualization:
+- Modern web browser with JavaScript enabled
+- Access to [TurtleToy.net](https://turtletoy.net)
+
+For development:
+- Python 3.7+ (for data processing)
+- Node.js (optional, for syntax checking)
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/pomfret-design.git
+   cd pomfret-design
+   ```
+
+2. **For TurtleToy deployment**
+   - Copy the contents of `pomfret_3d_enhanced.js`
+   - Paste into TurtleToy editor
+   - Click "Run" to see the visualization
+
+3. **For local development**
+   ```bash
+   # Generate 3D data from Python
+   python3 generate_3d_campus.py
+
+   # Check JavaScript syntax
+   node --check pomfret_3d_enhanced.js
+   ```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+## 💡 Usage
+
+### Basic Viewing
+
+Simply open `pomfret_3d_enhanced.js` in TurtleToy to view the interactive 3D campus.
+
+### Interactive Controls
+
+| Control | Range | Description |
+|---------|-------|-------------|
+| `viewPreset` | 0-4 | Switch between camera angles (Standard/Aerial/Architectural/Dramatic/Visitor) |
+| `animTour` | 0-1 | Animate 360° camera rotation around campus |
+| `timeOfDay` | 0-1 | Simulate lighting from dawn (0) to dusk (1) |
+| `explodeView` | 0-1 | Vertically separate buildings to show organization |
+| `showLabels` | 0/1 | Toggle building name labels |
+| `showLandscape` | 0/1 | Toggle pathways and landscape features |
+| `detailLevel` | 0-2 | Adjust rendering detail (Low/Medium/High) |
+| `offsetX` | -50 to 50 | Pan camera left/right |
+| `offsetY` | -50 to 50 | Pan camera up/down |
+
+### Generating New Data
+
+To update building data or add new buildings:
+
+1. Edit `generate_3d_campus.py` with new building coordinates
+2. Run the Python script:
+   ```bash
+   python3 generate_3d_campus.py
+   ```
+3. Copy generated data from `campus_3d_data.js` into your visualization
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+## 📁 Project Structure
+
+```
+pomfret-design/
+│
+├── README.md                      # This file
+├── LICENSE                        # MIT License
+│
+├── pomfret_3d_enhanced.js        # Main TurtleToy visualization
+├── pomfret_3d_detailed.js        # Alternative detailed view
+│
+├── generate_3d_campus.py         # Python data generator
+├── campus_3d_data.js             # Generated 3D geometry data
+│
+├── extract_osm_data.html         # OSM data extraction tool
+├── extract_3d_buildings.html     # 3D building data processor
+│
+└── docs/
+    ├── ARCHITECTURE.md           # Technical architecture documentation
+    └── DEVELOPMENT.md            # Development guidelines
 ```
 
-### Coordinate System
-- **Center**: 41.8862°N, 71.9640°W (Pomfret campus core)
-- **Normalized center**: (0.0001641, -0.0009395)
-- **Buildings positioned relative to center**
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-### Building Heights (coordinate units)
-- Chapel: 0.0012 (12m vaulted ceiling)
-- School Building: 0.0012 (4 stories)
-- The Bricks: 0.0011 (3 stories)
-- VISTA: 0.0009 (3 stories)
-- Centennial: 0.0008 (2 stories)
+---
 
-## Architectural Research
+## 🗺️ Roadmap
 
-Building designs based on actual photographs and architectural documentation:
-- VISTA designed by Annum Architects (2024)
-- Historical buildings by Ernest Flagg (1905-1915)
-- Centennial Building by Centerbrook Architects
-- Research from pomfret.org and architectural firm websites
+### Completed ✅
+- [x] Basic 3D isometric rendering
+- [x] Accurate building footprints from OSM
+- [x] Windows and doors with architectural detail
+- [x] Material-specific textures (brick, glass, stone)
+- [x] Animated camera tour
+- [x] Time-of-day lighting simulation
+- [x] Multiple view presets
+- [x] Exploded view mode
+- [x] Building labels
 
-## Data Source
+### In Progress 🚧
+- [ ] Additional campus buildings (expand from 12 to all major structures)
+- [ ] Enhanced landscape features (more detailed pathways)
+- [ ] Seasonal variations (foliage, snow)
 
-Building footprints from OpenStreetMap via Overpass API:
-- **License**: ODbL (OpenStreetMap contributors)
-- **Coverage**: Pomfret School campus, northeastern Connecticut
-- **Buildings**: 486 total in dataset, 5 selected for final visualization
+### Planned 🎯
+- [ ] Interior room visualization
+- [ ] Real-time campus events overlay
+- [ ] AR/VR export capabilities
+- [ ] Interactive building information cards
+- [ ] Walking tour animation paths
 
-## Credits
+See the [open issues](https://github.com/yourusername/pomfret-design/issues) for a full list of proposed features and known issues.
 
-**School**: Pomfret School, Pomfret, CT
-**Data**: OpenStreetMap contributors
-**Platform**: Turtletoy.net
-**Plotter**: Makelangelo Huge model
-**Visualization**: Architectural line drawing with photo-based details
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+## 🤝 Contributing
+
+Contributions are what make the open source community amazing! Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+### Development Guidelines
+
+- Follow existing code style and commenting patterns
+- Test thoroughly with TurtleToy before submitting
+- Update documentation for any new features
+- Include clear commit messages
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` file for more information.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+## 📧 Contact
+
+Your Name - [@yourtwitter](https://twitter.com/yourtwitter) - email@example.com
+
+Project Link: [https://github.com/yourusername/pomfret-design](https://github.com/yourusername/pomfret-design)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+## 🙏 Acknowledgments
+
+* [TurtleToy](https://turtletoy.net) - Amazing vector graphics platform
+* [OpenStreetMap](https://www.openstreetmap.org) - Geospatial building data
+* [Pomfret School](https://www.pomfretschool.org) - Campus inspiration
+* [Best-README-Template](https://github.com/othneildrew/Best-README-Template) - README structure
+* [Shields.io](https://shields.io) - Professional badges
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+<div align="center">
+
+**Made with ❤️ for architectural visualization and education**
+
+⭐ Star this repository if you found it helpful!
+
+</div>
