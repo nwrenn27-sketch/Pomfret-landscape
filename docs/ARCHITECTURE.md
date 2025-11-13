@@ -15,7 +15,7 @@ This document describes the technical architecture of the Pomfret School Campus 
                    ▼
 ┌─────────────────────────────────────────────────────────┐
 │              JavaScript Rendering Engine                 │
-│            (pomfret_3d_enhanced.js)                     │
+│            (pomfret_3d_polished.js)                     │
 │                                                          │
 │  ┌────────────┐  ┌──────────────┐  ┌────────────────┐  │
 │  │ 3D→2D      │  │  Building     │  │  Interactive   │  │
@@ -49,7 +49,7 @@ This document describes the technical architecture of the Pomfret School Campus 
 
 ### 1. Projection System
 
-**File**: `pomfret_3d_enhanced.js`
+**File**: `pomfret_3d_polished.js`
 **Function**: `proj(x, y, z, bldgIdx)`
 
 Converts 3D world coordinates to 2D isometric view:
@@ -70,7 +70,7 @@ function proj(x, y, z, bldgIdx) {
 
 ### 2. Building Rendering
 
-**File**: `pomfret_3d_enhanced.js`
+**File**: `pomfret_3d_polished.js`
 **Function**: `walk(i)`
 
 Renders a single building with:
@@ -270,7 +270,7 @@ const ROOFS = [
 
 ```bash
 # JavaScript syntax check
-node --check pomfret_3d_enhanced.js
+node --check pomfret_3d_polished.js
 
 # Python data generation
 python3 generate_3d_campus.py

@@ -109,8 +109,8 @@ For development:
    ```
 
 2. **For TurtleToy deployment**
-   - Copy the contents of `pomfret_3d_enhanced.js`
-   - Paste into TurtleToy editor
+   - Copy the contents of `pomfret_3d_polished.js`
+   - Paste into TurtleToy editor at https://turtletoy.net
    - Click "Run" to see the visualization
 
 3. **For local development**
@@ -119,7 +119,7 @@ For development:
    python3 generate_3d_campus.py
 
    # Check JavaScript syntax
-   node --check pomfret_3d_enhanced.js
+   node --check pomfret_3d_polished.js
    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -130,7 +130,7 @@ For development:
 
 ### Basic Viewing
 
-Simply open `pomfret_3d_enhanced.js` in TurtleToy to view the interactive 3D campus.
+Copy the contents of `pomfret_3d_polished.js` into TurtleToy to view the interactive 3D campus visualization.
 
 ### Interactive Controls
 
@@ -140,8 +140,9 @@ Simply open `pomfret_3d_enhanced.js` in TurtleToy to view the interactive 3D cam
 | `animTour` | 0-1 | Animate 360° camera rotation around campus |
 | `timeOfDay` | 0-1 | Simulate lighting from dawn (0) to dusk (1) |
 | `explodeView` | 0-1 | Vertically separate buildings to show organization |
-| `showLabels` | 0/1 | Toggle building name labels |
-| `showLandscape` | 0/1 | Toggle pathways and landscape features |
+| `showWindows` | 0/1 | Toggle building windows |
+| `showRoofs` | 0/1 | Toggle roof details |
+| `showDoors` | 0/1 | Toggle building doors |
 | `detailLevel` | 0-2 | Adjust rendering detail (Low/Medium/High) |
 | `offsetX` | -50 to 50 | Pan camera left/right |
 | `offsetY` | -50 to 50 | Pan camera up/down |
@@ -168,19 +169,25 @@ pomfret-design/
 │
 ├── README.md                      # This file
 ├── LICENSE                        # MIT License
+├── CONTRIBUTING.md                # Contribution guidelines
 │
-├── pomfret_3d_enhanced.js        # Main TurtleToy visualization
+├── pomfret_3d_polished.js        # Main TurtleToy visualization (current)
+├── pomfret_3d_enhanced.js        # Alternative enhanced view
 ├── pomfret_3d_detailed.js        # Alternative detailed view
 │
 ├── generate_3d_campus.py         # Python data generator
+├── generate_3d_turtletoy.py      # Alternative generator
 ├── campus_3d_data.js             # Generated 3D geometry data
 │
 ├── extract_osm_data.html         # OSM data extraction tool
 ├── extract_3d_buildings.html     # 3D building data processor
+├── extract_detailed_buildings.html # Detailed building extractor
 │
+├── final_campus_buildings.json   # Building data from OSM
+├── building_heights_reference.json # Height reference data
 └── docs/
     ├── ARCHITECTURE.md           # Technical architecture documentation
-    └── DEVELOPMENT.md            # Development guidelines
+    └── SCREENSHOTS.md            # Visual examples
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
